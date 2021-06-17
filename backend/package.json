@@ -4,7 +4,7 @@
   "description": "final project",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon inMatosinhos"
+    "dev": "nodemon server.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
