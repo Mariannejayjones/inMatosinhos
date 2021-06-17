@@ -1,0 +1,20 @@
+{
+  "name": "inmatosinhos",
+  "version": "1.0.0",
+  "description": "final project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mariannejayjones/inMatosinhos.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mariannejayjones/inMatosinhos/issues"
+  },
+  "homepage": "https://github.com/Mariannejayjones/inMatosinhos#readme"
+}
