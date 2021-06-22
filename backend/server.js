@@ -1,18 +1,20 @@
 const express = require('express')
-const bodyParser = require('body-parser')
+const server = express()
+const cors = require('cors')
 
-const restaurant = require('./restaurant')
+server.use(cors())
+server.options('*', cors());
 
-const PORT = 3000
+const EXPRESS_PORT = 3000
 
-const app = express()
-
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
-
-restaurant(app)
-
-
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`)
-})
+module.exports = {
+  bootstrap: (callback) => {
+    server.listen(EXPRESS_PORT, () => {
+      console.log(`Listening on port ${EXPRESS_PORT}`);
+      
+      if (callback) {
+        callback(server)
+      }
+    })
+  }
+}
