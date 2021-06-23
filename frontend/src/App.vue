@@ -1,9 +1,13 @@
 <template>
 <!--layout main page and login button -->
+
+
+ <v-app>
+
   <div id="main">
     <div class="background">
       <img :src="require('./assets/backgroundImage.png')"/>
-      <button id="openForm" @click="openform()" class="btnLogin">
+      <button id="loginForm" @click="loginform()" class="btnLogin">
         Login
       </button>
     </div>
@@ -13,51 +17,34 @@
   <!--rows for images with search options and buttons --->
 
     <div class="row"> 
-      <div class="searchColumns1">
+      <div class="searchColumns">
         <img :src="require('./assets/restaurant.png')"/>
         <button id="restaurantgo" @click="restaurantgo()" class="btnRestaurant">
           Restaurantes
         </button>
       </div>
 
-      <div class="searchColumns2">
+      <div >
         <img :src="require('./assets/store.png')"/>
-        <button id="storego" @click="storego()" class="btnStore">
+        <button id="storego" @click="storego()" class="btnRestaurant">
           Lojas
         </button>
       </div>
 
-      <div class="searchColumns3">
+      <div>
         <img :src="require('./assets/services.png')"/>
-        <button id="servicesgo" @click="servicesgo()" class="btnServices">
+        <button id="servicesgo" @click="servicesgo()" class="btnRestaurant">
           Serviços
         </button>
       </div>
 
-      <div class="searchColumns3">
+      <div>
         <img :src="require('./assets/agenda.png')"/>
-        <button id="agendago" @click="agendago()" class="btnAgenda">
+        <button id="agendago" @click="agendago()" class="btnRestaurant">
           Agenda
         </button>
       </div>
     </div>
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   
@@ -145,13 +132,54 @@
   </v-app> -->
   
   </div>
+  </v-app>
 </template>
 
 <script>
-  export default {
-    name:''
+  // export default {
+  //   data(){
+  //     return
+  //     {
+  //       showLoginCard: false
+      
+  //     }
+  //   },
 
-  }
+  //   methods: {
+
+  //   }
+
+  // export default {
+  //   data(){
+  //     return{
+  //       dialog: false,
+      
+  //     }
+  //   },
+
+  //   methods: {
+  //     openform(){
+  //       this.$router.push('model')
+
+  //     }
+
+        // getDoctors () {
+        //     axios.get('http://localhost:3000/doctors').then((response) => {
+        //         this.profiles = response.data.data 
+        //     })
+        // },
+
+        // getDoctorsPivotSpecializations () {
+        //     axios.get('http://localhost:3000/doctors').then((response) => {
+        //         this.profiles = response.data.data 
+        //     })
+  // function openForm() {
+  //   document.getElementById('main').style.display = "flex";
+  // }
+
+  // function closeForm() {
+  //   document.getElementById('main').style.display = "none";
+  // }
 
 // import axios from 'axios'
 
@@ -209,86 +237,40 @@
     font-weight: bold;
     text-transform: uppercase;
     padding: 16px 30px;
-    cursor: pointer;
     border: none;
     border-radius: 60px;
     top: 3%;
     left: 90%;
     position: absolute;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    /* animation: bounce;
+    animation-duration: 1,5s; */
   }
 
   .btnRestaurant{
+    position: relative;
+    left:0%;
+    bottom: 200px;
     background-color: #05c1c1;
     color: white;
     opacity: 0.9;
     font-size: 36px;
     font-weight: bold;
+    width:60%;
     text-transform: uppercase;
     padding: 16px 24px;
     cursor: pointer;
     border: none;
-    top: 95%;
-    left: 128px;
-    width:16%;
-    position: absolute;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 
-  .btnStore{
-    background-color: #05c1c1;
-    color: white;
-    opacity: 0.9;
-    font-size: 36px;
-    font-weight: bold;
-    text-transform: uppercase;
-    padding: 16px 24px;
-    cursor: pointer;
-    border: none;
-    top: 95%;
-    left: 1129px;
-    width:16%;
-    position: absolute;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  }
-
-  .btnServices{
-    background-color: #05c1c1;
-    color: white;
-    opacity: 0.9;
-    font-size: 36px;
-    font-weight: bold;
-    text-transform: uppercase;
-    padding: 16px 24px;
-    cursor: pointer;
-    border: none;
-    top: 95%;
-    left: 2121px;
-    width:16%;
-    position: absolute;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  }
-
-  .btnAgenda{
-    background-color: #05c1c1;
-    color: white;
-    opacity: 0.9;
-    font-size: 36px;
-    font-weight: bold;
-    text-transform: uppercase;
-    padding: 16px 24px;
-    cursor: pointer;
-    border: none;
-    top: 95%;
-    left: 3115px;
-    width:16%;
-    position: absolute;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  }
-
-  img.searchColumns1, img.searchColumns2, img.searchColumns3, img.searchColumns4{
+  img.searchColumns{
     flex: 25%;
     padding: 5px;
+  }
+
+  .searchColumns{
+    position:relative;
   }
 
   .row{
@@ -296,6 +278,14 @@
     border-style: solid;
     border-color: white;
     border-width: 130px;
+  }
+
+  .login-card{
+    position: fixed;
+    right: 10%;
+    top: 7%;
+    width: 650px;
+    height: 400px;
   }
 
 
