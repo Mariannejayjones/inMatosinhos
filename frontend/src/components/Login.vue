@@ -1,77 +1,93 @@
 <template>
-<!-- //v card serves as a container -->
-  <v-app>
-    <v-card width="400" class="mx-right mt-5">
-      <v-card-title> <!-- // proper heading has spacing and positioning -->
-        <h1 class="display1">Login</h1>
-      </v-card-title> 
-      <v-card-text> <!-- // serves as body -->
-        <v-form>
-          <v-text-field 
-            label="email" 
-            prepend icon="mdi-email" 
-          /> <!-- // input elements are called text field --> <!-- vuetify icons --->
-          <v-text-field 
-            :type="showPassword ? 'text' : 'password'"   
-            label="Password"
-            prepend icon="mdi-lock"
-            append-icon="showPassword ? 'mdi-eye' : 'mid-eye-off'"
-            @click:append="showPassword = !showPassword"
-          />
-        </v-form>
-      </v-card-text>
-      <v-divider></v-divider> <!--create divider between text and action/buttons - resembles a <div class=""> -->
-      <v-card-actions> <!--creates our actions - our buttons -->
-        <v-btn color="cyan darken-2">Login</v-btn>
-        <v-btn color="orange darken-3">Register</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-app>
-	
+  <div class="container">
+
+    <div class="loginBox">
+      <input placeholder="Email" type="text">
+      <input placeholder="Password" type="password">
+      <button>Login</button>
+    </div>
+
+  </div>
 </template>
 
 <script>
+  export default {
+    name:"",
+    components:{
 
-// export default {
-//     name:"App",
-// 	data() {
-// 		return {
-// 			username:"",
-// 			password:""
-// 		};
-// 	},
-
-	// methods: {
-  // // async fetchLogin() const response = await axios.get("http://localhost:3000/{
-  //   const { username, password } = this;
-  //   const res = await fetch()
-  //   ("http://localhost:3000/"),
-  // }
-
-	// 	method: "POST",
-  //   headers: {
-
-  //   }
-
-
-	// }
-
-  // }
- export default {
-   name:"App",
-   components:{
-
-   },
-   data() {
-     return{
-        showPassword: false
-     }
-  },
- }
+    }
+  }
 
 </script>
 
-scoped stays in this own content
-<style scoped> 
+<style> 
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	font-size: 16px;
+	color: #fff;
+}
+
+.loginBox {
+	background-color: darkcyan;
+	margin: auto auto;
+	padding: 40px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px #000;
+	position: absolute;
+	top: 0;
+	bottom: 42%;
+	left: 65%;
+	right: 0;
+	width: 400px;
+	height: 310px;
+}
+
+.loginBox:before {
+	background-image:('./assets/backgroundImage.png');
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	content: "";
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: -1;
+	display: block;
+	filter: blur(2px);
+}
+
+.loginBox input {
+	margin: 10px 0px;
+	border: none;
+	padding: 10px;
+	border-radius: 5px;
+	width: 100%;
+	font-size: 18px;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.loginBox button {
+	background-color: #05c1c1;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	width: 100%;
+	font-size: 18px;
+	padding: 10px;
+	margin: 20px 0px;
+}
+
+button, input, select, textarea {
+    background-color: whitesmoke;
+    opacity: 0.7;
+}
 
 </style>
