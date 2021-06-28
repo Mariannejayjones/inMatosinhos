@@ -37,6 +37,7 @@
     object-fit: cover;
     height: 285px;
     width: 100%;
+    position: relative;
   }   
 
   .btn-login{
@@ -63,7 +64,7 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  margin-top: -31px;
+  margin-top: -10px;
   margin-bottom: 10%;
   border-style: solid;
   border-width: 12px;

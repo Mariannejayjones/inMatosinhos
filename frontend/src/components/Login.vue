@@ -93,7 +93,7 @@ button, input, select, textarea {
 }
 
 ::placeholder{
-	color: #05c1c1;
+	color: #05c1c1;	
 }
 
 

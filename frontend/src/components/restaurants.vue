@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-<!--layout for searh bar and searchboxes-->
+<!--layout for search bar and searchboxes-->
     <div class="search-container">
       <div class="searchBox">
         <input placeholder="PESQUISAR" type="search">
@@ -36,8 +36,8 @@
         width="1200px">
 
         <v-col cols="12" sm="6" md="4" lg="4" xl="4"
-          v-for="n in 6"
-          :key="n"
+          v-for="restaurant in restaurants"
+          :key="restaurant.id"
         >
           <v-card
             class="mx-auto"
@@ -45,7 +45,7 @@
           >
           <div class="5oceanosImg d-flex flex-no-wrap justify-between" style="text-align: center; width:100%; margin-top:80px">
             <v-img
-              :src=restaurants[0].image
+              :src="getRestaurantImage(restaurant.images)"
               max-width="300px"
               max-height="200"
               min-width="128"
@@ -83,9 +83,7 @@
 import axios from 'axios'
  export default {
   data:() => ({
-    n:[],
-    restaurants: [
-    ]
+    restaurants: []
   }),
 
   methods:{
@@ -94,6 +92,12 @@ import axios from 'axios'
                 this.restaurants = response.data.data 
             })
         },
+      getRestaurantImage (image) {
+        if (!image) {
+          return  require('../assets/default.png') //create default img
+        }
+        return require('../assets/' + image)
+      }
   },
 
   async created() {
@@ -113,8 +117,8 @@ import axios from 'axios'
     background-color: #05c1c1;
     height: 45px;
     width: 600px;
-    margin-left: 25%;
-    margin-top: -25px;
+    margin-left: 33%;
+    margin-top: -46px;
     padding:10px 10px;
     border-radius: 5px;
     position: inherit;
@@ -130,12 +134,12 @@ import axios from 'axios'
     padding: 7px 24px;
     border: none;
     border-radius: 5px;
-    top: 402px;
-    left: 955px;
+    top: 466px;
+    left: 66%;
     height: 40px;
     width: 40px;
     padding: 10px;
-    position: absolute;
+    position: fixed;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
@@ -154,6 +158,7 @@ import axios from 'axios'
   flex-wrap: wrap;
   justify-content: space-between;
   margin-top:25px;
+  margin-left:63px;
   padding: 5px;
   align-items: flex-start;
   width:423px;
