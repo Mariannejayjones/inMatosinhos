@@ -71,6 +71,7 @@ body {
 	padding: 10px;
 	border-radius: 5px;
 	width: 100%;
+	background-color: white;
 	font-size: 18px;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
@@ -92,7 +93,8 @@ button, input, select, textarea {
 }
 
 ::placeholder{
-	color: white;
+	color: #05c1c1;
 }
+
 
 </style>

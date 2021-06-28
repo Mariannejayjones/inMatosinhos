@@ -16,7 +16,7 @@
       </div>
       <div id="sub-intro">
         <em>
-          De nós para Si...
+          Bla bla bla.. small intro....
         </em>
       </div>
       <div id="em2">
