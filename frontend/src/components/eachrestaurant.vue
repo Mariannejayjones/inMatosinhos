@@ -1,23 +1,24 @@
 <template>
+<div class="restaurantMain">
   <v-card
     :loading="loading"
     class="mx-auto my-12"
-    max-width="450"
-  >
+    max-width="450">
+
     <template slot="progress">
       <v-progress-linear
         color="cyan darken-3"
         height="10"
-        indeterminate
-      ></v-progress-linear>
+        indeterminate>
+      </v-progress-linear>
     </template>
 
     <v-img
       height="250"
-      src="../assets/omercado.png"
+      src="../assets/5oceanos.png"
     ></v-img>
 
-    <v-card-title>5 Oceanos</v-card-title>
+    <v-card-title>5 OCEANOS</v-card-title>
 
     <v-card-text>
       <v-row
@@ -41,7 +42,7 @@
 
     </v-card-text>
 
-    <v-card-title>HORÀRIO DISPONÌVEL</v-card-title>
+    <v-card-title>HORÁRIO DISPONÍVEL</v-card-title>
 
     <v-card-text>
       <v-chip-group
@@ -77,6 +78,35 @@
       </v-btn>
     </v-card-actions>
   </v-card>
+
+  <v-card
+    class="mx-auto my-12"
+    max-width="450">
+
+    <v-card-title>EMENTA</v-card-title>
+
+    <v-card-text>
+
+      <div class="menuItems display: flex; justify-content: space-around; padding-left: 10%; padding-bottom: 38px;">
+        <input type="checkbox" id="jack" value="Jack" v-model="menuItems">
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="john" value="John" v-model="menuItems">
+        <label for="john">John</label>
+        <input type="checkbox" id="mike" value="Mike" v-model="menuItems">
+        <label for="mike">Mike</label>
+        <br>
+        <span>Checked names: {{ checkedNames }}</span>
+
+      </div> 
+
+       
+    </v-card-text>
+
+
+
+  </v-card>
+    
+</div>
 </template>
 
 <script>
@@ -84,10 +114,17 @@
     data: () => ({
       loading: false,
       selection: 1,
+      menuItems: []
     }),
 
     methods: {
       reserve () {
+        this.loading = true
+
+        setTimeout(() => (this.loading = false), 2000)
+      },
+
+      encomende () {
         this.loading = true
 
         setTimeout(() => (this.loading = false), 2000)
@@ -108,4 +145,5 @@
   word-break: break-all;
   color: #05c1c1;
 }
+
 </style>

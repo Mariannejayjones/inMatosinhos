@@ -32,39 +32,35 @@
     </div>
 
     <div>
-        <v-row class="mt-12"
-        width="1200px">
+      <v-row class="mt-12"
+      width="1200px">
 
         <v-col cols="12" sm="6" md="4" lg="4" xl="4"
           v-for="restaurant in restaurants"
-          :key="restaurant.id"
-        >
+          :key="restaurant.id">
+
           <v-card
             class="mx-auto"
-            width="400px"
-          >
+            width="400px">
+
           <div class="5oceanosImg d-flex flex-no-wrap justify-between" style="text-align: center; width:100%; margin-top:80px">
             <v-img
-              :src="getRestaurantImage(restaurant.images)"
-              max-width="300px"
+              :src="getRestaurantImage(restaurant.image)"
               max-height="200"
               min-width="128"
               min-height="200"
-              style="text-align: center; width:100%;"
-              
-            >
+              style="text-align: center; width:100%;">
             </v-img>
           </div>
 
           <v-card-title>
-            5 Oceanos
+            5 OCEANOS
           </v-card-title>
 
           <v-card-actions>
             <v-btn
               color="orange darken-4"
-              text
-            >
+              text>
               VER
             </v-btn>
           </v-card-actions>
@@ -75,8 +71,6 @@
     </div>
 
   </div>
-
-
 </template>
 
 <script>
@@ -88,21 +82,30 @@ import axios from 'axios'
 
   methods:{
     getRestaurants () {
-            axios.get('http://localhost:3000/restaurants').then((response) => {
-                this.restaurants = response.data.data 
-            })
-        },
-      getRestaurantImage (image) {
-        if (!image) {
-          return  require('../assets/default.png') //create default img
-        }
-        return require('../assets/' + image)
+      axios.get('http://localhost:3000/restaurants').then((response) => {
+        this.restaurants = response.data.data 
+      })
+    },
+
+    getRestaurantNames () {
+      axios.get('http://localhost:3000/restaurants').then((response) => {
+        this.restaurants = response.data.data 
+      })
+    },
+
+    getRestaurantImage (image) {
+      if (!image) {
+        return  require('../assets/default.png') //create default img
       }
+        return require('../assets/' + image)
+    }
   },
 
   async created() {
         await this.getRestaurants()
+        await this.getRestaurantNames()
     }
+
 
 
   
@@ -121,7 +124,7 @@ import axios from 'axios'
     margin-top: -46px;
     padding:10px 10px;
     border-radius: 5px;
-    position: inherit;
+    position: relative;
 
 }
 
@@ -134,12 +137,12 @@ import axios from 'axios'
     padding: 7px 24px;
     border: none;
     border-radius: 5px;
-    top: 466px;
-    left: 66%;
+    top: -6px;
+    left: 74%;
     height: 40px;
     width: 40px;
     padding: 10px;
-    position: fixed;
+    position: relative;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 

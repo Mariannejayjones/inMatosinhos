@@ -5,8 +5,9 @@ const db = require('../../db')
 
 router.get('/', (req, res) => {
   const { limit, page } = req.query
-//brings all ids via pagination
-  const _limit = +limit || 20 // limits pages to 20 by default
+//brings all ids via pagination //
+  const _limit = +limit || 20 
+// limits pages to 20 by default
   const _page = +page || 1
 
   db.query('SELECT COUNT(id) FROM restaurants', (error, countResults, _) => {
