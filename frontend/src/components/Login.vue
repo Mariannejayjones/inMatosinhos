@@ -45,6 +45,8 @@ body {
 	right: 0;
 	width: 400px;
 	height: 310px;
+	opacity:0.8;
+
 }
 
 .loginBox:before {
@@ -86,8 +88,11 @@ body {
 }
 
 button, input, select, textarea {
-    background-color: whitesmoke;
-    opacity: 0.7;
+    background-color: white;
+}
+
+::placeholder{
+	color: white;
 }
 
 </style>

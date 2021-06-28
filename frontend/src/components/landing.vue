@@ -2,7 +2,7 @@
 <!-- landing layout --->
   <div>
     <div class="top-banner">
-      <!-- <img :src="require('../assets/backgroundImage.png')"/> // this image for landing and landing menu --> 
+      <!-- <img :src="require('../assets/backgroundImage.png')"/> // this image for landing and login --> 
       <button id="loginBox" @click="showLogin = !showLogin" class="btn-login">
         Login
       </button>

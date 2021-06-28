@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <div class="top-banner">
-      <img :src="require('./assets/backgroundImage.png')"/>
+      <img :src="require('./assets/thebackground.png')"/>
       <button id="loginBox" @click="showLogin = !showLogin" class="btn-login">
         Login
       </button>
@@ -35,7 +35,7 @@
 <style>
  .top-banner img{
     object-fit: cover;
-    height: 500px;
+    height: 285px;
     width: 100%;
   }   
 
