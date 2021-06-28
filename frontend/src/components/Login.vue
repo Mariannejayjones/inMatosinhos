@@ -2,8 +2,8 @@
   <div class="container">
 
     <div class="loginBox">
-      <input placeholder="Email" type="text">
-      <input placeholder="Password" type="password">
+      <input placeholder="Email" v-model="input.email" type="text">
+      <input placeholder="Password" v-model="input.password" type="password">
       <button>Login</button>
     </div>
 

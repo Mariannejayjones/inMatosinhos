@@ -36,7 +36,7 @@
       </div>
 
       <div style="width: 25%; max-height: 250px;">
-        <img  :src="require('@/assets/store.png')"/>
+        <img :src="require('@/assets/store.png')"/>
         <button id="storego" @click="storego()" class="btnRestaurant">
           Lojas
         </button>

@@ -121,7 +121,7 @@ import axios from 'axios'
     height: 45px;
     width: 600px;
     margin-left: 33%;
-    margin-top: -46px;
+    margin-top: -90px;
     padding:10px 10px;
     border-radius: 5px;
     position: relative;
@@ -137,9 +137,9 @@ import axios from 'axios'
     padding: 7px 24px;
     border: none;
     border-radius: 5px;
-    top: -6px;
+    top: -10px;
     left: 74%;
-    height: 40px;
+    height: 45px;
     width: 40px;
     padding: 10px;
     position: relative;

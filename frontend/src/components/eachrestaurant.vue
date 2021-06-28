@@ -3,7 +3,7 @@
   <v-card
     :loading="loading"
     class="mx-auto my-12"
-    max-width="450">
+    max-width="650">
 
     <template slot="progress">
       <v-progress-linear
