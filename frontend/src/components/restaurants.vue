@@ -33,9 +33,9 @@
 
     <div>
         <v-row class="mt-12"
-        width="600px">
+        width="1200px">
 
-        <v-col cols="12" sm="6" md="4" lg="6" xl="4"
+        <v-col cols="12" sm="6" md="4" lg="4" xl="4"
           v-for="n in 6"
           :key="n"
         >
@@ -45,12 +45,12 @@
           >
           <div class="5oceanosImg d-flex flex-no-wrap justify-between" style="text-align: center; width:100%; margin-top:80px">
             <v-img
-              src="../assets/5oceanos.png"
+              :src=restaurants[0].image
               max-width="300px"
               max-height="200"
               min-width="128"
               min-height="200"
-              style="text-align: center;"
+              style="text-align: center; width:100%;"
               
             >
             </v-img>
@@ -80,10 +80,27 @@
 </template>
 
 <script>
+import axios from 'axios'
  export default {
   data:() => ({
-    n:[]
-  })
+    n:[],
+    restaurants: [
+    ]
+  }),
+
+  methods:{
+    getRestaurants () {
+            axios.get('http://localhost:3000/restaurants').then((response) => {
+                this.restaurants = response.data.data 
+            })
+        },
+  },
+
+  async created() {
+        await this.getRestaurants()
+    }
+
+
   
 
  }

@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import login from  '../components/Login.vue'
 import landing from  '../components/landing.vue'
 import restaurants from '../components/restaurants.vue'
+import eachrestaurant from '../components/eachrestaurant.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -23,6 +24,12 @@ const routes = [
     path: '/login',
     name: 'login',
     component: login
+  },
+
+  {
+    path: '/eachrestaurant',
+    name: 'eachrestaurant',
+    component: eachrestaurant
   },
 ]
 
