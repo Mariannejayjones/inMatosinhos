@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // import }Home from '../views/Home.vue'
-import login from  '../components/Login.vue'
+import login from  '../components/login.vue'
 import landing from  '../components/landing.vue'
 import restaurants from '../components/restaurants.vue'
 import eachrestaurant from '../components/eachrestaurant.vue'
