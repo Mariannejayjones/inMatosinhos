@@ -120,7 +120,7 @@ import axios from 'axios'
     background-color: #05c1c1;
     height: 45px;
     width: 600px;
-    margin-left: 33%;
+    margin-left: 26%;
     margin-top: -90px;
     padding:10px 10px;
     border-radius: 5px;
@@ -153,6 +153,7 @@ import axios from 'axios'
 
 ::placeholder{
   color:white;
+  padding-bottom: 15px;
 }
 
 .searchCheckboxes{

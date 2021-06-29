@@ -31,6 +31,7 @@ const routes = [
     name: 'eachrestaurant',
     component: eachrestaurant
   },
+
 ]
 
 const router = new VueRouter({

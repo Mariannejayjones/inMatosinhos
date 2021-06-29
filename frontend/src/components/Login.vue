@@ -1,9 +1,9 @@
 <template>
   <div class="container">
 
-    <div class="loginBox">
-      <input placeholder="Email" v-model="input.email" type="text">
-      <input placeholder="Password" v-model="input.password" type="password">
+    <div class="login-box">
+      <input placeholder="Email" type="text">
+      <input placeholder="Password" type="password">
       <button>Login</button>
     </div>
 
@@ -32,7 +32,7 @@ body {
 	color: #fff;
 }
 
-.loginBox {
+.login-box {
 	background-color: darkcyan;
 	margin: auto auto;
 	padding: 40px;
@@ -49,7 +49,7 @@ body {
 
 }
 
-.loginBox:before {
+.login-box:before {
 	background-image:('./assets/backgroundImage.png');
 	width: 100%;
 	height: 100%;
@@ -65,7 +65,7 @@ body {
 	filter: blur(2px);
 }
 
-.loginBox input {
+.login-box input {
 	margin: 10px 0px;
 	border: none;
 	padding: 10px;
@@ -76,7 +76,7 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.loginBox button {
+.login-box button {
 	background-color: #05c1c1;
 	color: #fff;
 	border: none;
