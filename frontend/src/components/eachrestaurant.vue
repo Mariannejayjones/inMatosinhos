@@ -42,7 +42,7 @@
 
       </v-card-text>
 
-      <v-card-title>HORÁRIO DISPONÍVEL</v-card-title>
+      <v-card-title>HORÁRIO DISPONÍVEL (hoje)</v-card-title>
 
       <v-card-text>
         <v-chip-group
@@ -127,6 +127,7 @@
       selection: 1,
       dialogm1: '',
       dialog: false,
+      picker: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     }),
 
     methods: {
