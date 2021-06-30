@@ -104,6 +104,7 @@ import axios from 'axios'
   async created() {
         await this.getRestaurants()
         await this.getRestaurantNames()
+
     }
 
 

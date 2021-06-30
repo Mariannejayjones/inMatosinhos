@@ -125,7 +125,6 @@
     data: () => ({
       loading: false,
       selection: 1,
-      menuItems: [],
       dialogm1: '',
       dialog: false,
     }),
