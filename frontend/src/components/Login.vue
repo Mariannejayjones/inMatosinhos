@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-
     <div class="login-box">
       <input placeholder="Email" type="text">
       <input placeholder="Password" type="password">

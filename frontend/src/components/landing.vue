@@ -30,28 +30,28 @@
     <div style="display: flex; justify-content: space-around; padding-left: 10%; padding-bottom: 38px;">
       <div style="width: 25%; max-height: 250px;">
         <img :src="require('@/assets/restaurant.png')"/>
-        <button id="restaurantgo" @click="goToRestaurant()" class="btnRestaurant">
+        <button id="goToRestaurant" @click="goToRestaurant()" class="btnRestaurant">
           Restaurantes
         </button>
       </div>
 
       <div style="width: 25%; max-height: 250px;">
         <img :src="require('@/assets/store.png')"/>
-        <button id="storego" @click="storego()" class="btnRestaurant">
+        <button id="goToStore" @click="goToStore()" class="btnRestaurant">
           Lojas
         </button>
       </div>
 
       <div style="width: 25%; max-height: 250px;">
         <img :src="require('@/assets/services.png')"/>
-        <button id="servicesgo" @click="servicesgo()" class="btnRestaurant">
+        <button id="goToServices" @click="goToServices()" class="btnRestaurant">
         Serviços
         </button>
       </div>
 
       <div style="width: 25%; max-height: 250px">
         <img :src="require('@/assets/agenda.png')"/>
-        <button id="agendago" @click="agendago()" class="btnRestaurant">
+        <button id="goToAgenda" @click="goToAgenda()" class="btnRestaurant">
         Agenda
         </button>
       </div>

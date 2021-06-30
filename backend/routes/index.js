@@ -9,7 +9,7 @@ const restaurantsRouter = require("./internal/restaurants");
 
 module.exports = {
   register(app) {
-    app.use("/restaurants", restaurantsRouter);
+    app.use("/restaurant", restaurantsRouter);
     // app.use('/todos', auth, todosRouter)
 
     // app.use("/categories", auth, categoriesRouter)

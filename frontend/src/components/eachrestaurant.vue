@@ -66,9 +66,20 @@
           color="orange darken-4"
           text
           @click="reserve()">
+
+          <v-row justify="center">
+            <v-date-picker
+              v-model="picker"
+              year-icon="mdi-calendar-blank"
+              prev-icon="mdi-skip-previous"
+              next-icon="mdi-skip-next"
+              header-color="cyan darken-2">
+            </v-date-picker>
+          </v-row>
           Reserve
         </v-btn>
 
+        <!-- ementa -->
         <div class="text-center">
           <v-dialog
             v-model="dialog"
@@ -91,16 +102,17 @@
               </v-card-title>
 
               <v-card-text>
-                <input type="radio" id="one" value="One" v-model="picked">
+                <input type="radio" id="one" value="One">
                 <label for="one">One</label>
                 <br>
-                <input type="radio" id="two" value="Two" v-model="picked">
+                <input type="radio" id="two" value="Two" >
                 <label for="two">Two</label>
                 <br>
               </v-card-text>
 
               <v-divider></v-divider>
 
+              <!-- encomendar -->
               <v-card-actions>
                 <v-spacer></v-spacer>
                   <v-btn
@@ -132,9 +144,7 @@
 
     methods: {
       reserve() {
-        this.loading = true
-
-        setTimeout(() => (this.loading = false), 2000)
+        this.picker = true
       },
 
        ementa() {
