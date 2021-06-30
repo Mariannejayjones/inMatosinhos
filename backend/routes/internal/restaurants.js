@@ -42,29 +42,21 @@ const db = require('../../db')
 //   })
 // })
 
-// get restaurants via id // 
+// get restaurant via id //
 router.get('/:id', (req, res) => {
   const { id } = req.params
-  db.query(`SELECT * FROM restaurant WHERE id = ?`, [id], (error, results) => {
+
+  db.query('SELECT * FROM restaurant where id = ?', [id], (error, results) => {
     if (error) {
       throw error
     }
-      res.send({
+
+    res.send({
       code: 200,
-      meta: null,
-      data: results[0]
+      data: results
     })
   })
 })
-
-router.get('/'), (req, res) =>{
-  db.query('SELECT * FROM restaurant'), (error, results) => {
-    if (error) {
-      throw error 
-    }
-    res.send(results)
-  }
-}
 
 // by name //
 router.get('/:id/name', (req, res) => {
