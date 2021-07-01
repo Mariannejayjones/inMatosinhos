@@ -2,12 +2,12 @@ const router = require('express').Router()
 const { validate } = require('indicative/validator')
 
 const db = require('../../db')
-
+//brings all ids via pagination //
 router.get('/', (req, res) => {
   const { limit, page } = req.query
-//brings all ids via pagination //
-  const _limit = +limit || 20 
 // limits pages to 20 by default
+  const _limit = +limit || 20 
+
   const _page = +page || 1
 
   db.query('SELECT COUNT(id) FROM restaurant', (error, countResults, _) => {
@@ -58,11 +58,11 @@ router.get('/:id', (req, res) => {
   })
 })
 
-// by name //
-router.get('/name', (req, res) => {
-  const { id,name } = req.params
+// get restaurant by name //
+router.get('/:id/name', (req, res) => {
+  const { id } = req.params
 
-  db.query('SELECT * FROM restaurant where name = "?"', [name], (error, results) => {
+  db.query('SELECT name FROM restaurant where id = ?', [id], (error, results) => {
     if (error) {
       throw error
     }

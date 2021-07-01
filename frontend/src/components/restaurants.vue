@@ -54,8 +54,12 @@
           </div>
 
           <v-card-title>
-            5 OCEANOS
+            {{restaurant.name}}
           </v-card-title>
+
+          <span>{{restaurant.address}}</span>
+            <br>
+          <span>{{restaurant.contact}}</span>
 
           <v-card-actions>
             <v-btn
@@ -87,12 +91,6 @@ import axios from 'axios'
       })
     },
 
-    // getRestaurantNames () {
-    //   axios.get('http://localhost:3000/restaurants').then((response) => {
-    //     this.restaurants = response.data.data 
-    //   })
-    // },
-
     getRestaurantImage (image) {
       if (!image) {
         return  require('../assets/default.png') //create default img
@@ -103,7 +101,6 @@ import axios from 'axios'
 
   async created() {
         await this.getRestaurants()
-        // await this.getRestaurantNames()
 
     }
 

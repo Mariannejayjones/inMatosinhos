@@ -97,31 +97,30 @@
             </template>
 
             <v-card
-            v-if="menuItems">
-              <v-card-title class="text-h5 grey lighten-2">
-                EMENTA
-              </v-card-title>
+              v-if="menuItems">
+                <v-card-title class="text-h5 grey lighten-2">
+                  EMENTA
+                </v-card-title>
 
-              <v-card-text 
-                
-                v-for="menuItem in menuItems"
-                :key="menuItem.id">
-                <input v-model="a" type="radio" :id=menuItem.id :value=menuItem.id>
-                <label :for=menuItem.id>{{menuItem.name}}</label>
-                <br>
-              </v-card-text>
+                <v-card-text 
+                  v-for="menuItem in menuItems"
+                  :key="menuItem.id">
+                    <input v-model="a" type="radio" :id=menuItem.id :value=menuItem.id>
+                    <label :for=menuItem.id>{{menuItem.name}}</label>
+                    <br>
+                </v-card-text>
 
               <v-divider></v-divider>
-                <v-card-text
-                v-if="radioItems">
-                <v-list-item>
-                <v-list-item-content
-                v-for="(radio, index) in radioItems"
-                :key="index">
-                  <v-list-item-title>{{radio[index].name}}</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
 
+                <v-card-text
+                  v-if="radioItems">
+                    <v-list-item>
+                      <v-list-item-content
+                        v-for="(radio, index) in radioItems"
+                        :key="index">
+                          <v-list-item-title>{{radio[index].name}}</v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
                 </v-card-text>
 
               <!-- encomendar -->
@@ -164,15 +163,16 @@ import axios from 'axios'
         this.picker = true
       },
 
-       ementa() {
+      ementa() {
         this.loading = true
         axios.get('http://localhost:3000/menuitems/6').then((response) => {
-            console.log(response)
+          console.log(response)
             this.menuItems = response.data.data
             })
-            this.loading= false
+              this.loading= false
 
       },
+
       addToRadioItems() {
         this.loading = true
         axios.get(`http://localhost:3000/menuitems/${this.a}/name`).then((response) => {
@@ -180,8 +180,8 @@ import axios from 'axios'
             this.dishItem = response.data.data
             })
             this.loading = false
-        this.radioItems.push(this.dishItem)
-          this.a = null
+              this.radioItems.push(this.dishItem)
+                this.a = null
       }
     },
 
@@ -192,6 +192,7 @@ import axios from 'axios'
 </script>
 
 <style scoped>
+
 .v-card__title {
   align-items: center;
   display: flex;
@@ -202,11 +203,16 @@ import axios from 'axios'
   line-height: 2rem;
   word-break: break-all;
   color: #05c1c1;
+
 }
 
 .restaurantMain{
   margin-top: -40px;
   margin-bottom: 60px;
+}
+
+label{
+  padding:5px;
 }
 
 </style>

@@ -58,6 +58,7 @@ router.get('/:id', (req, res) => {
   })
 })
 
+// get restaurant_menu_items via name // 
 router.get('/:id/name', (req, res) => {
   const { id } = req.params
 

@@ -30,7 +30,7 @@
         this.$router.push('/login')
         }
         else{
-          this.router.push('/restaurants')
+          this.$router.push('/restaurants')
         }
       }
     }

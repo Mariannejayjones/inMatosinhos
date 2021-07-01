@@ -61,6 +61,21 @@
 </template>
 
 <script>
+  export default {
+    data() {
+      return {
+        
+      }
+       },
+
+    methods:{
+      goToRestaurant(){
+          this.$router.push('/restaurants')
+      }
+    }
+  }
+   
+
   
 </script>
 
