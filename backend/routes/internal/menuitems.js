@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { validate } = require('indicative/validator')
+// const { validate } = require('indicative/validator')
 
 const db = require('../../db')
 
@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 // limits pages to 20 by default
   const _page = +page || 1
 
-  db.query('SELECT COUNT(id) FROM restaurant', (error, countResults, _) => {
+  db.query('SELECT COUNT(id) FROM restaurant_menu_items', (error, countResults, _) => {
     if (error) {
       throw error
     }
@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
     const total = countResults[0]['COUNT(id)']
     const pageCount = Math.ceil(total / _limit)
 
-    db.query('SELECT * FROM restaurant LIMIT ?, ?', [offset, _limit], (error, results, _) => {
+    db.query('SELECT * FROM restaurant_menu_items LIMIT ?, ?', [offset, _limit], (error, results, _) => {
       if (error) {
         throw error
       }
@@ -42,11 +42,11 @@ router.get('/', (req, res) => {
   })
 })
 
-// get restaurant via id //
+// get restaurant_menu_items via id //
 router.get('/:id', (req, res) => {
   const { id } = req.params
 
-  db.query('SELECT * FROM restaurant where id = ?', [id], (error, results) => {
+  db.query('SELECT * FROM restaurant_menu_items where restaurant_id = ?', [id], (error, results) => {
     if (error) {
       throw error
     }
@@ -58,11 +58,10 @@ router.get('/:id', (req, res) => {
   })
 })
 
-// by name //
-router.get('/name', (req, res) => {
-  const { id,name } = req.params
+router.get('/:id/name', (req, res) => {
+  const { id } = req.params
 
-  db.query('SELECT * FROM restaurant where name = "?"', [name], (error, results) => {
+  db.query('SELECT name FROM restaurant_menu_items where id = ?', [id], (error, results) => {
     if (error) {
       throw error
     }
@@ -73,6 +72,7 @@ router.get('/name', (req, res) => {
     })
   })
 })
+
 // //get categories via id //
 // router.get('/:id', (req, res) => {
 //   const { id } = req.params
@@ -90,11 +90,11 @@ router.get('/name', (req, res) => {
 //   })
 // })
 
-// // post restaurants // 
+// // post restaurant_menu_itemss // 
 // router.post('/', (req, res) => {
-//   const restaurant = req.body
+//   const restaurant_menu_items = req.body
 
-//   validate(restaurant, {
+//   validate(restaurant_menu_items, {
 //     name: "required",  
 //     category: "required",
 //     capacity: "required",
@@ -104,14 +104,14 @@ router.get('/name', (req, res) => {
 //     pricerangemax: "required",
 //     created: "required",
 //   }).then((value) => {
-//     db.query('INSERT INTO restaurant SET ?', [value], (error, results, _) => {
+//     db.query('INSERT INTO restaurant_menu_items SET ?', [value], (error, results, _) => {
 //       if (error) {
 //         throw error
 //       }
 
 //       const { insertId } = results
 
-//       db.query('SELECT * FROM restaurant WHERE id = ? LIMIT 1', [insertId], (error, results, _) => {
+//       db.query('SELECT * FROM restaurant_menu_items WHERE id = ? LIMIT 1', [insertId], (error, results, _) => {
 //         if (error) {
 //           throw error
 //         }
@@ -135,12 +135,12 @@ router.get('/name', (req, res) => {
 //   validate(status, {
 //     status: 'required',
 //   }).then((value) => {
-//     db.query('UPDATE restaurants SET ? WHERE id = ?', [value, id], (error, results, _) => {
+//     db.query('UPDATE restaurant_menu_itemss SET ? WHERE id = ?', [value, id], (error, results, _) => {
 //       if (error) {
 //         throw error
 //       }
 
-//       db.query('SELECT * FROM restaurants WHERE id = ? LIMIT 1', [id], (error, results, _) => {
+//       db.query('SELECT * FROM restaurant_menu_itemss WHERE id = ? LIMIT 1', [id], (error, results, _) => {
 //         if (error) {
 //           throw error
 //         }
@@ -180,14 +180,14 @@ router.get('/name', (req, res) => {
 router.delete('/:id', (req, res) => {
   const { id } = req.params
 
-  db.query('SELECT * FROM restaurant WHERE id = ?', [id], (error, results, _) => {
+  db.query('SELECT * FROM restaurant_menu_items WHERE id = ?', [id], (error, results, _) => {
     if (error) {
       throw error
     }
     console.log(results)
-    const [restaurant] = results
+    const [restaurant_menu_items] = results
 
-    db.query('DELETE FROM restaurant WHERE id = ?', [id], (error,_, __) => {
+    db.query('DELETE FROM restaurant_menu_items WHERE id = ?', [id], (error,_, __) => {
       if (error) {
         throw error
       }
@@ -195,7 +195,7 @@ router.delete('/:id', (req, res) => {
       res.send({
         code: 200,
         meta: null,
-        data: restaurant
+        data: restaurant_menu_items
       })
     })
   })

@@ -1,6 +1,7 @@
 // const auth = require('../middlewares/auth')
 
 const restaurantsRouter = require("./internal/restaurants");
+const restaurantMenuItemsRouter = require("./internal/menuitems");
 // const todosRouter = require('./internal/todos')
 // const categoriesRouter = require("./internal/categories");
 
@@ -10,6 +11,7 @@ const restaurantsRouter = require("./internal/restaurants");
 module.exports = {
   register(app) {
     app.use("/restaurant", restaurantsRouter);
+    app.use("/menuitems", restaurantMenuItemsRouter);
     // app.use('/todos', auth, todosRouter)
 
     // app.use("/categories", auth, categoriesRouter)

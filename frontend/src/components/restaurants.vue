@@ -82,16 +82,16 @@ import axios from 'axios'
 
   methods:{
     getRestaurants () {
-      axios.get('http://localhost:3000/restaurants').then((response) => {
+      axios.get('http://localhost:3000/restaurant').then((response) => {
         this.restaurants = response.data.data 
       })
     },
 
-    getRestaurantNames () {
-      axios.get('http://localhost:3000/restaurants').then((response) => {
-        this.restaurants = response.data.data 
-      })
-    },
+    // getRestaurantNames () {
+    //   axios.get('http://localhost:3000/restaurants').then((response) => {
+    //     this.restaurants = response.data.data 
+    //   })
+    // },
 
     getRestaurantImage (image) {
       if (!image) {
@@ -103,7 +103,7 @@ import axios from 'axios'
 
   async created() {
         await this.getRestaurants()
-        await this.getRestaurantNames()
+        // await this.getRestaurantNames()
 
     }
 

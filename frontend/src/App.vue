@@ -2,7 +2,7 @@
   <v-app>
     <div class="top-banner">
       <img :src="require('./assets/thebackground.png')"/>
-      <button id="loginBox" @click="showLogin = !showLogin" class="btn-login">
+      <button id="loginBox" @click="showLogin = !showLogin; toLogin()" class="btn-login mb-4">
         Login
       </button>
     </div>
@@ -19,15 +19,21 @@
 
 <script>
   export default {
-   components:{
-
-   },
-
-   data() {
-     return{
+    data() {
+      return{
         showLogin: true
-     }
-  },
+      }
+    },
+    methods:{
+      toLogin(){
+        if (!this.showLogin){
+        this.$router.push('/login')
+        }
+        else{
+          this.router.push('/restaurants')
+        }
+      }
+    }
  }
 
 </script>

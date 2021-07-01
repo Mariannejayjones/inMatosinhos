@@ -96,21 +96,33 @@
               </v-btn>
             </template>
 
-            <v-card>
+            <v-card
+            v-if="menuItems">
               <v-card-title class="text-h5 grey lighten-2">
                 EMENTA
               </v-card-title>
 
-              <v-card-text>
-                <input type="radio" id="one" value="One">
-                <label for="one">One</label>
-                <br>
-                <input type="radio" id="two" value="Two" >
-                <label for="two">Two</label>
+              <v-card-text 
+                
+                v-for="menuItem in menuItems"
+                :key="menuItem.id">
+                <input v-model="a" type="radio" :id=menuItem.id :value=menuItem.id>
+                <label :for=menuItem.id>{{menuItem.name}}</label>
                 <br>
               </v-card-text>
 
               <v-divider></v-divider>
+                <v-card-text
+                v-if="radioItems">
+                <v-list-item>
+                <v-list-item-content
+                v-for="(radio, index) in radioItems"
+                :key="index">
+                  <v-list-item-title>{{radio[index].name}}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+
+                </v-card-text>
 
               <!-- encomendar -->
               <v-card-actions>
@@ -118,7 +130,7 @@
                   <v-btn
                     color="orange daken-4"
                     text
-                    @click="dialog = false">
+                    @click="addToRadioItems()">
                   ENCOMENDAR
                   </v-btn>
               </v-card-actions>
@@ -133,6 +145,7 @@
 </template>
 
 <script>
+import axios from 'axios'
   export default {
     data: () => ({
       loading: false,
@@ -140,6 +153,10 @@
       dialogm1: '',
       dialog: false,
       picker: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      menuItems: {}, 
+      a: '',
+      radioItems: [],
+      dishItem: {}
     }),
 
     methods: {
@@ -149,10 +166,28 @@
 
        ementa() {
         this.loading = true
+        axios.get('http://localhost:3000/menuitems/6').then((response) => {
+            console.log(response)
+            this.menuItems = response.data.data
+            })
+            this.loading= false
 
-        setTimeout(() => (this.loading = false), 2000)
       },
+      addToRadioItems() {
+        this.loading = true
+        axios.get(`http://localhost:3000/menuitems/${this.a}/name`).then((response) => {
+          console.log(response)
+            this.dishItem = response.data.data
+            })
+            this.loading = false
+        this.radioItems.push(this.dishItem)
+          this.a = null
+      }
     },
+
+    created(){
+      this.ementa
+    }
   }
 </script>
 
