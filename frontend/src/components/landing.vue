@@ -9,25 +9,21 @@
     </div>
 
     <div class="intro">
-      <div id="em">
-        <em>
-          [
-        </em>
-      </div>
       <div id="sub-intro">
         <em>
-          Bla bla bla.. small intro....
+          "Só é preciso perceber
+          a beleza que está aí, à nossa frente: 
+            <br>
+          No mar, na flôr, nos livros, na música,
+          na presença dos que amamos... 
+            <br>
+          E ver a vida através dos olhos da alma,
+          com alegria e gratidão.""
         </em>
       </div>
-      <div id="em2">
-        <em>
-          ]
-        </em>
-      </div>
+   </div>
 
-    </div>
-
-    <div style="display: flex; justify-content: space-around; padding-left: 10%; padding-bottom: 38px;">
+    <div style="display: flex; justify-content: space-around; padding-left: 7%; padding-bottom: 38px;">
       <div style="width: 25%; max-height: 250px;">
         <img :src="require('@/assets/restaurant.png')"/>
         <button id="goToRestaurant" @click="goToRestaurant()" class="btnRestaurant">
@@ -85,7 +81,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 28px;
   margin-top: -70px;
-  margin-left: 25%;
+  margin-left: 33%;
   margin-bottom: 60px;
   color: #05c1c1;
 }
@@ -117,16 +113,9 @@
     height: 200px;
 }
 
-  #em, #em2{
-    font-size: 40px;
-
+em{
+  font-size:21px;
 }
-
-/* .top-banner img{
-    object-fit: cover;
-    height: 500px;
-    width: 100%;
-  }    */
 
 
 </style>

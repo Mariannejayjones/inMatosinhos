@@ -4,20 +4,22 @@
       <input placeholder="Email" type="text">
       <input placeholder="Password" type="password">
       <button @click="toRestaurants()">Login</button>
+	    <!-- <button>Registe-se</button> -->
     </div>
 
   </div>
 </template>
 
 <script>
- export default {
+  export default {
       
     methods:{
       toRestaurants(){
-		this.$router.push('/restaurants')
-        }
-      }
+		    this.$router.push('/restaurants')
+      },
+      
     }
+  }
 
 
 </script>
@@ -41,12 +43,12 @@ body {
 	border-radius: 5px;
 	box-shadow: 0 0 10px #000;
 	position: absolute;
-	top: 20px;
+	top: 115px;
 	bottom: 42%;
 	left: 65%;
 	right: 0;
 	width: 400px;
-	height: 310px;
+	height: 355px;
 	opacity:0.8;
 
 }
@@ -87,7 +89,7 @@ body {
 	width: 100%;
 	font-size: 18px;
 	padding: 10px;
-	margin: 20px 0px;
+	margin: 10px 0px;
 }
 
 button, input, select, textarea {

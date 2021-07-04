@@ -5,6 +5,7 @@ import login from  '../components/login.vue'
 import landing from  '../components/landing.vue'
 import restaurants from '../components/restaurants.vue'
 import eachrestaurant from '../components/eachrestaurant.vue'
+// import register from '../components/register.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -31,6 +32,12 @@ const routes = [
     name: 'eachrestaurant',
     component: eachrestaurant
   },
+
+
+  //   path: '/register',
+  //   name: 'register',
+  //   component: register
+  // },
 
 ]
 

@@ -187,5 +187,8 @@ label{
   color: #05c1c1;
 }
 
+span{
+  margin-left: 20px;
+}
 /* change checkbox colors and alignment with time */
 </style>
