@@ -4,9 +4,8 @@
       <input placeholder="Email" type="text">
       <input placeholder="Password" type="password">
       <button @click="toRestaurants()">Login</button>
-	    <!-- <button>Registe-se</button> -->
+      <button id="openRegister" @click="openRegister()" class="btnRegister">Registe-se</button>
     </div>
-
   </div>
 </template>
 
@@ -15,11 +14,15 @@
       
     methods:{
       toRestaurants(){
-		    this.$router.push('/restaurants')
+        this.$router.push('/restaurants')
       },
-      
+
+      openRegister(){
+        this.$router.push('/register')
+      }
+
     }
-  }
+}
 
 
 </script>
@@ -47,7 +50,7 @@ body {
 	bottom: 42%;
 	left: 65%;
 	right: 0;
-	width: 400px;
+	width: 360px;
 	height: 355px;
 	opacity:0.8;
 

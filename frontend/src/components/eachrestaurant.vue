@@ -1,6 +1,7 @@
 <template>
   <div class="restaurantMain">
     <v-card
+    v-if="restaurant"
       :loading="loading"
       class="mx-auto my-12"
       max-width="650">
@@ -15,10 +16,10 @@
 
       <v-img
         height="250"
-        src="../assets/5oceanos.png">
+        :src="getRestaurantImage(restaurant[0].image)">
       </v-img>
 
-      <v-card-title>5 OCEANOS</v-card-title>
+      <v-card-title>{{restaurant[0].name}}</v-card-title>
 
       <v-card-text>
         <v-row
@@ -37,7 +38,14 @@
         </v-row>
 
         <div class="my-4 text-subtitle-1">
-          $$ . Marisco; Peixe; Carne
+          <div>
+          Preço médio: {{avgPrice}}
+          </div>
+          <div>
+          {{restaurant[0].category}}
+          </div>
+          
+
         </div>
 
       </v-card-text>
@@ -49,6 +57,8 @@
           v-model="selection"
           active-class="orange darken-4 white--text"
           column>
+
+          <button @click="getTime(timeSlot[0].start_time,timeSlot[0].end_time)">HERE!</button>
 
           <v-chip>5:30PM</v-chip>
 
@@ -67,7 +77,7 @@
           text
           @click="reserve()">
 
-          <v-row justify="center">
+          <!-- <v-row justify="center">
             <v-date-picker
               v-model="picker"
               year-icon="mdi-calendar-blank"
@@ -75,7 +85,7 @@
               next-icon="mdi-skip-next"
               header-color="cyan darken-2">
             </v-date-picker>
-          </v-row>
+          </v-row> -->
           Reserve
         </v-btn>
 
@@ -105,20 +115,20 @@
                 <v-card-text 
                   v-for="menuItem in menuItems"
                   :key="menuItem.id">
-                    <input v-model="a" type="radio" :id=menuItem.id :value=menuItem.id>
-                    <label :for=menuItem.id>{{menuItem.name}}</label>
+                    <input v-model="a" type="checkbox" :id="menuItem.id" :value="menuItem.id">
+                    <label :for="menuItem.id">{{menuItem.name}}</label>
                     <br>
                 </v-card-text>
 
               <v-divider></v-divider>
 
                 <v-card-text
-                  v-if="radioItems">
+                  v-if="checkItems">
                     <v-list-item>
                       <v-list-item-content
-                        v-for="(radio, index) in radioItems"
+                        v-for="(check, index) in checkItems"
                         :key="index">
-                          <v-list-item-title>{{radio[index].name}}</v-list-item-title>
+                          <v-list-item-title>{{check[index].name}}</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                 </v-card-text>
@@ -129,7 +139,7 @@
                   <v-btn
                     color="orange daken-4"
                     text
-                    @click="addToRadioItems()">
+                    @click="addTocheckItems()">
                   ENCOMENDAR
                   </v-btn>
               </v-card-actions>
@@ -145,6 +155,8 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
+
   export default {
     data: () => ({
       loading: false,
@@ -153,9 +165,12 @@ import axios from 'axios'
       dialog: false,
       picker: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       menuItems: {}, 
-      a: '',
-      radioItems: [],
-      dishItem: {}
+      a: [],
+      checkItems: [],
+      dishItem: {},
+      restaurant: null,
+      timeSlot: {},
+      slots: {}
     }),
 
     methods: {
@@ -173,20 +188,72 @@ import axios from 'axios'
 
       },
 
-      addToRadioItems() {
+      addTocheckItems() {
         this.loading = true
         axios.get(`http://localhost:3000/menuitems/${this.a}/name`).then((response) => {
           console.log(response)
             this.dishItem = response.data.data
-            })
+        })
             this.loading = false
-              this.radioItems.push(this.dishItem)
+              this.checkItems.push(this.dishItem)
                 this.a = null
+      },
+
+      getRestaurant() {
+        this.loading = true
+        axios.get('http://localhost:3000/restaurant/6').then((response) => {
+          console.log(response)
+            this.restaurant = response.data.data
+            })
+              this.loading= false
+
+      },
+
+      getRestaurantImage (image) {
+      if (!image) {
+        return  require('../assets/default.png') //create default img
       }
+        return require('../assets/' + image)
+      },
+
+      getTimeSlot(){
+        this.loading = true
+          axios.get('http://localhost:3000/time-slots').then((response) => {
+            console.log(response)
+              this.timeSlot = response.data.data
+              })
+                this.loading= false
+      },
+
+       
+  
     },
 
+    computed:{
+      avgPrice(){
+        if(!this.restaurant[0].pricerangemin||!this.restaurant[0].pricerangemax){return}
+        let min = this.restaurant[0].pricerangemin
+        let max  = this.restaurant[0].pricerangemax
+          return (max + min) /2
+      },
+
+      reservationTime(){
+        debugger
+        let start = this.timeSlot[0].start_time
+        let date = moment(start,'HH:mm:ss')
+        var travelTime = date.add(2, 'hours').format('HH:mm');
+
+          return travelTime        
+        
+      },
+    },
+
+
+
     created(){
-      this.ementa
+      this.ementa()
+      this.getRestaurant()
+      this.getTimeSlot()
     }
   }
 </script>

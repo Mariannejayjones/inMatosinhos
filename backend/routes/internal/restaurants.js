@@ -10,6 +10,8 @@ router.get('/', (req, res) => {
 
   const _page = +page || 1
 
+
+  // pagination // 
   db.query('SELECT COUNT(id) FROM restaurant', (error, countResults, _) => {
     if (error) {
       throw error
@@ -73,22 +75,7 @@ router.get('/:id/name', (req, res) => {
     })
   })
 })
-// //get categories via id //
-// router.get('/:id', (req, res) => {
-//   const { id } = req.params
 
-//   db.query(`SELECT * FROM categories WHERE id = ${id}`, (error, results) => {
-//     if (error) {
-//       throw error
-//     }
-
-//     res.send({
-//       code: 200,
-//       meta: null,
-//       data: results[0]
-//     })
-//   })
-// })
 
 // // post restaurants // 
 // router.post('/', (req, res) => {

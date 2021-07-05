@@ -118,7 +118,7 @@ import axios from 'axios'
     background-color: #05c1c1;
     height: 45px;
     width: 600px;
-    margin-left: 26%;
+    margin-left: 33%;
     margin-top: -90px;
     padding:10px 10px;
     border-radius: 5px;

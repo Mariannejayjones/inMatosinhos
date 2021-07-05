@@ -1,16 +1,18 @@
 const router = require('express').Router()
-// const { validate } = require('indicative/validator')
+const { validate } = require('indicative/validator')
 
 const db = require('../../db')
-
+//brings all ids via pagination //
 router.get('/', (req, res) => {
   const { limit, page } = req.query
-//brings all ids via pagination //
-  const _limit = +limit || 20 
 // limits pages to 20 by default
+  const _limit = +limit || 20 
+
   const _page = +page || 1
 
-  db.query('SELECT COUNT(id) FROM restaurant_menu_items', (error, countResults, _) => {
+
+  // pagination // 
+  db.query('SELECT COUNT(id) FROM time_slots', (error, countResults, _) => {
     if (error) {
       throw error
     }
@@ -19,7 +21,7 @@ router.get('/', (req, res) => {
     const total = countResults[0]['COUNT(id)']
     const pageCount = Math.ceil(total / _limit)
 
-    db.query('SELECT * FROM restaurant_menu_items LIMIT ?, ?', [offset, _limit], (error, results, _) => {
+    db.query('SELECT * FROM time_slots LIMIT ?, ?', [offset, _limit], (error, results, _) => {
       if (error) {
         throw error
       }
@@ -42,11 +44,11 @@ router.get('/', (req, res) => {
   })
 })
 
-// get restaurant_menu_items via id //
+// get time_slots via id //
 router.get('/:id', (req, res) => {
   const { id } = req.params
 
-  db.query('SELECT * FROM restaurant_menu_items where restaurant_id = ?', [id], (error, results) => {
+  db.query('SELECT * FROM time_slots where id = ?', [id], (error, results) => {
     if (error) {
       throw error
     }
@@ -58,11 +60,11 @@ router.get('/:id', (req, res) => {
   })
 })
 
-// get restaurant_menu_items via name // 
+// get time_slots by name //
 router.get('/:id/name', (req, res) => {
   const { id } = req.params
 
-  db.query('SELECT name FROM restaurant_menu_items where id = ?', [id], (error, results) => {
+  db.query('SELECT name FROM time_slots where id = ?', [id], (error, results) => {
     if (error) {
       throw error
     }
@@ -74,43 +76,41 @@ router.get('/:id/name', (req, res) => {
   })
 })
 
-// // post restaurant_menu_itemss // 
-// router.post('/', (req, res) => {
-//   const restaurant_menu_items = req.body
 
-//   validate(restaurant_menu_items, {
-//     name: "required",  
-//     category: "required",
-//     capacity: "required",
-//     address: "required",
-//     contact: "required",
-//     pricerangemin: "required",
-//     pricerangemax: "required",
-//     created: "required",
-//   }).then((value) => {
-//     db.query('INSERT INTO restaurant_menu_items SET ?', [value], (error, results, _) => {
-//       if (error) {
-//         throw error
-//       }
+// post time_slots // 
+router.post('/', (req, res) => {
+  const time_slots = req.body
 
-//       const { insertId } = results
+  validate(time_slots, {
+    restaurant_id: "required",  
+    day: "required",
+    start_time: "required",
+    end_time: "required",
+   
+  }).then((value) => {
+    db.query('INSERT INTO time_slots SET ?', [value], (error, results, _) => {
+      if (error) {
+        throw error
+      }
 
-//       db.query('SELECT * FROM restaurant_menu_items WHERE id = ? LIMIT 1', [insertId], (error, results, _) => {
-//         if (error) {
-//           throw error
-//         }
+      const { insertId } = results
 
-//         res.send({
-//           code: 200,
-//           meta: null,
-//           data: results[0]
-//         })
-//       })
-//     })
-//   }).catch((error) => {
-//     res.status(400).send(error)
-//   })
-// })
+      db.query('SELECT * FROM time_slots WHERE id = ? LIMIT 1', [insertId], (error, results, _) => {
+        if (error) {
+          throw error
+        }
+
+        res.send({
+          code: 200,
+          meta: null,
+          data: results[0]
+        })
+      })
+    })
+  }).catch((error) => {
+    res.status(400).send(error)
+  })
+})
 
 // router.put('/:id', (req, res) => {
 //   const { id } = req.params
@@ -119,12 +119,12 @@ router.get('/:id/name', (req, res) => {
 //   validate(status, {
 //     status: 'required',
 //   }).then((value) => {
-//     db.query('UPDATE restaurant_menu_itemss SET ? WHERE id = ?', [value, id], (error, results, _) => {
+//     db.query('UPDATE time_slotss SET ? WHERE id = ?', [value, id], (error, results, _) => {
 //       if (error) {
 //         throw error
 //       }
 
-//       db.query('SELECT * FROM restaurant_menu_itemss WHERE id = ? LIMIT 1', [id], (error, results, _) => {
+//       db.query('SELECT * FROM time_slotss WHERE id = ? LIMIT 1', [id], (error, results, _) => {
 //         if (error) {
 //           throw error
 //         }
@@ -164,14 +164,14 @@ router.get('/:id/name', (req, res) => {
 router.delete('/:id', (req, res) => {
   const { id } = req.params
 
-  db.query('SELECT * FROM restaurant_menu_items WHERE id = ?', [id], (error, results, _) => {
+  db.query('SELECT * FROM time_slots WHERE id = ?', [id], (error, results, _) => {
     if (error) {
       throw error
     }
     console.log(results)
-    const [restaurant_menu_items] = results
+    const [time_slots] = results
 
-    db.query('DELETE FROM restaurant_menu_items WHERE id = ?', [id], (error,_, __) => {
+    db.query('DELETE FROM time_slots WHERE id = ?', [id], (error,_, __) => {
       if (error) {
         throw error
       }
@@ -179,7 +179,7 @@ router.delete('/:id', (req, res) => {
       res.send({
         code: 200,
         meta: null,
-        data: restaurant_menu_items
+        data: time_slots
       })
     })
   })
