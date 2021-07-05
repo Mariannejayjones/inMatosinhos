@@ -1,7 +1,7 @@
 <template>
   <div class="restaurantMain">
     <v-card
-    v-if="restaurant"
+      v-if="restaurant"
       :loading="loading"
       class="mx-auto my-12"
       max-width="650">
@@ -16,10 +16,10 @@
 
       <v-img
         height="250"
-        :src="getRestaurantImage(restaurant[0].image)">
+        :src="getRestaurantImage(restaurant.image)">
       </v-img>
-
-      <v-card-title>{{restaurant[0].name}}</v-card-title>
+<!-- array is at 0 to allow for each index  -->
+      <v-card-title>{{restaurant.name}}</v-card-title> 
 
       <v-card-text>
         <v-row
@@ -39,13 +39,11 @@
 
         <div class="my-4 text-subtitle-1">
           <div>
-          Preço médio: {{avgPrice}}
+          Preço médio: {{avgPrice}} 
           </div>
           <div>
-          {{restaurant[0].category}}
+          {{restaurant.category}}
           </div>
-          
-
         </div>
 
       </v-card-text>
@@ -58,9 +56,7 @@
           active-class="orange darken-4 white--text"
           column>
 
-          <button @click="getTime(timeSlot[0].start_time,timeSlot[0].end_time)">HERE!</button>
-
-          <v-chip>5:30PM</v-chip>
+          <v-chip>{{restaurant.timeSlot}}</v-chip>
 
           <v-chip>7:30PM</v-chip>
 
@@ -107,16 +103,17 @@
             </template>
 
             <v-card
-              v-if="menuItems">
+              v-if="restaurant.menu">
                 <v-card-title class="text-h5 grey lighten-2">
                   EMENTA
                 </v-card-title>
 
                 <v-card-text 
-                  v-for="menuItem in menuItems"
+                  v-for="menuItem in restaurant.menu"
                   :key="menuItem.id">
-                    <input v-model="a" type="checkbox" :id="menuItem.id" :value="menuItem.id">
+                    <input v-model="eachItem" type="checkbox" :id="menuItem.id" :value="menuItem.id" @change="changeTotal($event, menuItem.price)">
                     <label :for="menuItem.id">{{menuItem.name}}</label>
+                    <div>{{menuItem.price}}€</div>
                     <br>
                 </v-card-text>
 
@@ -133,6 +130,7 @@
                     </v-list-item>
                 </v-card-text>
 
+              Total price: {{totalPrice.toFixed(2)}}€
               <!-- encomendar -->
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -165,7 +163,7 @@ import moment from 'moment'
       dialog: false,
       picker: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       menuItems: {}, 
-      a: [],
+      eachItem: [],
       checkItems: [],
       dishItem: {},
       restaurant: null,
@@ -178,30 +176,30 @@ import moment from 'moment'
         this.picker = true
       },
 
-      ementa() {
-        this.loading = true
-        axios.get('http://localhost:3000/menuitems/6').then((response) => {
-          console.log(response)
-            this.menuItems = response.data.data
-            })
-              this.loading= false
+      // ementa() {
+      //   this.loading = true
+      //   axios.get('http://localhost:3000/menuitems/6').then((response) => {
+      //     console.log(response)
+      //       this.menuItems = response.data.data
+      //       })
+      //         this.loading= false
 
-      },
+      // },
 
       addTocheckItems() {
         this.loading = true
-        axios.get(`http://localhost:3000/menuitems/${this.a}/name`).then((response) => {
+        axios.get(`http://localhost:3000/menuitems/${this.eachItem}/name`).then((response) => {
           console.log(response)
             this.dishItem = response.data.data
         })
             this.loading = false
               this.checkItems.push(this.dishItem)
-                this.a = null
+                this.eachItem = null
       },
 
       getRestaurant() {
         this.loading = true
-        axios.get('http://localhost:3000/restaurant/6').then((response) => {
+        axios.get('http://localhost:3000/restaurant/' + this.$route.params.id).then((response) => {
           console.log(response)
             this.restaurant = response.data.data
             })
@@ -218,27 +216,33 @@ import moment from 'moment'
 
       getTimeSlot(){
         this.loading = true
-          axios.get('http://localhost:3000/time-slots').then((response) => {
+          axios.get('http://localhost:3000/time-slots' + this.$route.params.id).then((response) => {
             console.log(response)
               this.timeSlot = response.data.data
               })
                 this.loading= false
       },
 
-       
-  
+      changeTotal(event, price){
+        if(event.target.checked) {
+          this.totalPrice += parseFloat(price);
+        } else {
+          this.totalPrice -= parseFloat(price);
+        }
+      }
+
     },
 
     computed:{
       avgPrice(){
-        if(!this.restaurant[0].pricerangemin||!this.restaurant[0].pricerangemax){return}
-        let min = this.restaurant[0].pricerangemin
-        let max  = this.restaurant[0].pricerangemax
+        if(!this.restaurant.pricerangemin||!this.restaurant.pricerangemax){return}
+        let min = this.restaurant.pricerangemin
+        let max  = this.restaurant.pricerangemax
+
           return (max + min) /2
       },
 
       reservationTime(){
-        debugger
         let start = this.timeSlot[0].start_time
         let date = moment(start,'HH:mm:ss')
         var travelTime = date.add(2, 'hours').format('HH:mm');
@@ -251,7 +255,8 @@ import moment from 'moment'
 
 
     created(){
-      this.ementa()
+      this.totalPrice = 0.0;
+      // this.ementa()
       this.getRestaurant()
       this.getTimeSlot()
     }

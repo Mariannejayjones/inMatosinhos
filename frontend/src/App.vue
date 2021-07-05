@@ -24,6 +24,7 @@
         showLogin: true
       }
     },
+    // if login is true- send to restaurant page // 
     methods:{
       toLogin(){
         if (!this.showLogin){

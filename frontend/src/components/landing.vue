@@ -63,7 +63,7 @@
         
       }
        },
-
+// on click - go to restaurant page // 
     methods:{
       goToRestaurant(){
           this.$router.push('/restaurants')

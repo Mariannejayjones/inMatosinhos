@@ -11,12 +11,12 @@
 
 <script>
   export default {
-      
+      // once logged in send to restaurants // 
     methods:{
       toRestaurants(){
         this.$router.push('/restaurants')
       },
-
+      // on click open register form // 
       openRegister(){
         this.$router.push('/register')
       }

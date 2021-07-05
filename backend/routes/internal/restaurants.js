@@ -48,14 +48,23 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params
 
-  db.query('SELECT * FROM restaurant where id = ?', [id], (error, results) => {
+  db.query('SELECT * FROM restaurant where id = ?', [id], (error, restaurant_results) => {
     if (error) {
       throw error
     }
 
-    res.send({
-      code: 200,
-      data: results
+    db.query('SELECT * FROM restaurant_menu_items where restaurant_id = ?', [id], (error, menu_results) => {
+      if (error) {
+        throw error
+      }
+
+      merged_data = restaurant_results[0]
+      merged_data.menu = menu_results
+
+      res.send({
+        code: 200,
+        data: merged_data
+      })
     })
   })
 })

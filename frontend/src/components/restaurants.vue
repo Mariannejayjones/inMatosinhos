@@ -64,7 +64,8 @@
           <v-card-actions>
             <v-btn
               color="orange darken-4"
-              text>
+              text
+              @click="goToRestaurant(restaurant.id)">
               VER
             </v-btn>
           </v-card-actions>
@@ -93,9 +94,13 @@ import axios from 'axios'
 
     getRestaurantImage (image) {
       if (!image) {
-        return  require('../assets/default.png') //create default img
+        return require('../assets/default.png') //create default img
       }
         return require('../assets/' + image)
+    },
+
+    goToRestaurant(id){
+        this.$router.push('/restaurant/' + id)
     }
   },
 
@@ -108,7 +113,7 @@ import axios from 'axios'
 
   
 
- }
+}
 
 </script>
 

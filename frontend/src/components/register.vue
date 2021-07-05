@@ -133,6 +133,7 @@
 * {
   box-sizing: border-box;
 }
+ 
 .registerForm {
   height: 100%;
   max-width: 100%;
@@ -157,13 +158,8 @@
     cursor: pointer;
 }
 
-/* form {
-  display: block;
-  margin-top: 0em;
-} */
-
 .formHeader, h2 {
-  background-color: #05c1c1;
+  background-color: darkcyan;
   padding: 12px;
   color: #fff;
   padding: 12px;
@@ -177,7 +173,7 @@
 }
 
 textarea, input[type=file] {
-  border: 2px solid #05c1c1;
+  border: 2px solid darkcyan;
   resize: none;
 }
 
@@ -185,7 +181,7 @@ input[type=email], input[type=number], input[type=password], input[type=text], i
   width: 97%;
   padding: 8px 45px;
   border: none;
-  border: 2px solid #05c1c1;
+  border: 2px solid darkcyan;
   outline: none;
   line-height: 1;
   margin-top: 5px;
@@ -195,7 +191,7 @@ input[type=email], input[type=number], input[type=password], input[type=text], i
 }
 
 input[type=submit] {
-  background-color: #05c1c1;
+  background-color: darkcyan;
   width: 35%;
   color: #fff;
   padding: 14px;
@@ -210,14 +206,8 @@ input[type=submit] {
 
 label {
   cursor: default;
-  color: #05c1c1;
+  color: darkcyan;
   padding: 8px 45px; 
 }
 
- /* h2 {
-  border: solid;
-  background-color: #05c1c1;
-  color: white;
-  padding: 12px;
- } */
 </style>
