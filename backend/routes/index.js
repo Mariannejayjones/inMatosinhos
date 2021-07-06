@@ -3,6 +3,7 @@
 const restaurantsRouter = require("./internal/restaurants");
 const restaurantMenuItemsRouter = require("./internal/menuitems");
 const timeSlotsRouter = require("./internal/timeSlots");
+const reservationRouter = require("./internal/reservations");
 // const todosRouter = require('./internal/todos')
 // const categoriesRouter = require("./internal/categories");
 
@@ -14,6 +15,7 @@ module.exports = {
     app.use("/restaurant", restaurantsRouter);
     app.use("/menuitems", restaurantMenuItemsRouter);
     app.use("/timeslots", timeSlotsRouter);
+    app.use("/reservations", reservationRouter);
     // app.use('/todos', auth, todosRouter)
 
     // app.use("/categories", auth, categoriesRouter)

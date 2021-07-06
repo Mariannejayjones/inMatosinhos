@@ -48,25 +48,31 @@
 
       </v-card-text>
 
-      <v-card-title>HORÁRIO DISPONÍVEL (hoje)</v-card-title>
+      <v-card-title>
+        HORÁRIO DISPONÍVEL: 
+         <div class="date">
+          <input type="date" id="date" name="date"
+          v-model="pickedDate">
+          </div>
+      </v-card-title>
 
       <v-card-text>
-        <v-chip-group
-          v-for="timeSlot in this.timeSlots"
-          :key="timeSlot.id"
-          v-model="selection"
-          active-class="orange darken-4 white--text"
-          column>
+        <v-row>
+          <v-col cols="12" sm= "2">
+            <v-chip-group
+              v-model="selection"
+              active-class="orange darken-4 white--text"
+              column>
+             
+              <v-chip
+              v-for="todaySlot in this.todaySlots"
+              :key="todaySlot.id">
+              {{todaySlot.start_time}}
+              </v-chip>
 
-          <v-chip>{{timeSlot.start_time}}</v-chip>
-<!-- 
-          <v-chip>7:30PM</v-chip>
-
-          <v-chip>8:00PM</v-chip>
-
-          <v-chip>9:00PM</v-chip> -->
-
-        </v-chip-group>
+            </v-chip-group>
+          </v-col>
+        </v-row>
       </v-card-text>
 
       <v-card-actions>
@@ -74,16 +80,6 @@
           color="orange darken-4"
           text
           @click="reserve()">
-
-          <!-- <v-row justify="center">
-            <v-date-picker
-              v-model="picker"
-              year-icon="mdi-calendar-blank"
-              prev-icon="mdi-skip-previous"
-              next-icon="mdi-skip-next"
-              header-color="cyan darken-2">
-            </v-date-picker>
-          </v-row> -->
           Reserve
         </v-btn>
 
@@ -119,7 +115,7 @@
                     <div>{{menuItem.price}}€</div>
                     <br>
                 </v-card-text>
-
+<!-- // menuitem quantity still needed ---!!!!! // -->
               <v-divider></v-divider>
 
                 <v-card-text
@@ -133,8 +129,10 @@
                     </v-list-item>
                 </v-card-text>
 
-              Total: {{totalPrice.toFixed(2)}} € 
+                <div class="total">
+                  Total: {{totalPrice.toFixed(2)}} € 
 <!-- // toFixed - enforces number of decimal places to change // -->
+                </div>
 
               <!-- encomendar -->
               <v-card-actions>
@@ -158,26 +156,34 @@
 
 <script>
 import axios from 'axios'
-// import moment from 'moment'
-
   export default {
     data: () => ({
       loading: false,
       selection: 1,
       dialogm1: '',
       dialog: false,
-      picker: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       menuItems: {}, 
       eachItem: [],
       checkItems: [],
-      dishItem: {},
       restaurant: null,
       timeSlots: {},
+      todaySlots: null,
+      pickedDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
     }),
 
     methods: {
       reserve() {
-        this.picker = true
+        this.loading = true
+        let reservationInfo = {
+          "user_id": 1,
+          "restaurant_id": this.$route.params.id,
+          "reservation_time": this.selection,
+          "reservation_day" : this.pickedDate
+        }
+        axios.post(`http://localhost:3000/reservations`, reservationInfo).then((response) => {
+          console.log(response)
+        })
+          this.loading = false
       },
 
       addTocheckItems() {
@@ -228,37 +234,46 @@ import axios from 'axios'
             return obj.id !== menuItem.id // function must return true for all items we want to keep listed as selected 
           })
         }
-      }
+      },
+
+      getTodaySlots(){
+        this.loading = true
+          axios.get('http://localhost:3000/timeslots/' + this.$route.params.id + '/restaurant/') .then((response) => { 
+            console.log(response) 
+            this.todaySlots = response.data.data
+          })
+          this.loading= false
+      },
+
+    
 
     },
 
     computed:{
     // create average between the max price and min price range -  max + min divided by 2 // 
-      avgPrice(){
+      avgPrice() {
         if(!this.restaurant.pricerangemaxmin||!this.restaurant.pricerangemax){return}
         let min = this.restaurant.pricerangemin
         let max  = this.restaurant.pricerangemax
+          return (max + min) /2
+      }
 
-        return (max + min) /2
-      },
+    },
 
-      // reservationTime(){
-      //   let start = this.timeSlot[0].start_time
-      //   let date = moment(start,'HH:mm:ss')
-      //   var travelTime = date.add(2, 'hours').format('HH:mm');
-
-      //     return travelTime        
-        
-      // },
+    watch:{
+      pickedDate(val) {
+        this.getTodaySlots()
+        console.log(val)
+      }
     },
 
     created(){
       this.totalPrice = 0.0;
-      // this.ementa()
       this.getRestaurant()
       this.getTimeSlot()
+      this.getTodaySlots()
     }
-  }
+  } 
 </script>
 
 <style scoped>
@@ -283,6 +298,16 @@ import axios from 'axios'
 
 label{
   padding:5px;
+  color: #05c1c1;
+}
+
+.total{
+  color: #05c1c1;
+  padding: 25px;
+}
+
+.date{
+  margin-left:10pc
 }
 
 </style>

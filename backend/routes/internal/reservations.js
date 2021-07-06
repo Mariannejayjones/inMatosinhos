@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 
 
   // pagination // 
-  db.query('SELECT COUNT(id) FROM time_slots', (error, countResults, _) => {
+  db.query('SELECT COUNT(id) FROM reservations', (error, countResults, _) => {
     if (error) {
       throw error
     }
@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
     const total = countResults[0]['COUNT(id)']
     const pageCount = Math.ceil(total / _limit)
 
-    db.query('SELECT * FROM time_slots LIMIT ?, ?', [offset, _limit], (error, results, _) => {
+    db.query('SELECT * FROM reservations LIMIT ?, ?', [offset, _limit], (error, results, _) => {
       if (error) {
         throw error
       }
@@ -44,79 +44,53 @@ router.get('/', (req, res) => {
   })
 })
 
-// get time_slots via id //
+// get one reservations via id //
 router.get('/:id', (req, res) => {
   const { id } = req.params
 
-  db.query('SELECT * FROM time_slots where restaurant_id = ?', [id], (error, results) => {
+  db.query('SELECT * FROM reservations where id = ?', [id], (error, reservation_results) => {
     if (error) {
       throw error
     }
+    
+// get all menus items via that reservations id -  in order not to have multiple similar requests // 
 
-    res.send({
-      code: 200,
-      data: results
-    })
-  })
-}),
+    db.query('SELECT * FROM reservation_menu_items where reservation_id = ?', [id], (error, menu_results) => {
+      if (error) {
+        throw error
+      }
 
-
-
-
-router.get('/:id/restaurant/', (req, res) => {
-  const { id } = req.params
-  var startDate = new Date(); // todays date
-  var weekDay = startDate.getDay();
-  console.log(weekDay)
-
-  db.query('SELECT * FROM time_slots where restaurant_id = ? and week_day = ?', [id, weekDay], (error, results) => {
-    if (error) {
-      throw error
-    }
-
-    res.send({
-      code: 200,
-      data: results
-    })
-  })
-})
-
-// get time_slots by name //
-router.get('/:id/name', (req, res) => {
-  const { id } = req.params
-
-  db.query('SELECT name FROM time_slots where id = ?', [id], (error, results) => {
-    if (error) {
-      throw error
-    }
-
-    res.send({
-      code: 200,
-      data: results
+      reservation_data = reservation_results[0]  // results for one reservations via id // array is at 0 - to sort one - 
+      reservation_data.menu = menu_results // results all menus for that reservations via id // 
+ 
+      res.send({
+        code: 200,
+        data: reservation_data
+      })
     })
   })
 })
 
 
-// post time_slots // 
+// post reservations // 
 router.post('/', (req, res) => {
-  const time_slots = req.body
+  const reservations = req.body
 
-  validate(time_slots, {
+  validate(reservations, {
     restaurant_id: "required",  
-    week_day: "required",
-    start_time: "required",
-    end_time: "required",
-   
+    user_id: "required",
+    reservation_time: "required",
+    reservation_day: "required"
+  
   }).then((value) => {
-    db.query('INSERT INTO time_slots SET ?', [value], (error, results, _) => {
+    db.query('INSERT INTO reservations SET ?', [value], (error, results, _) => {
       if (error) {
         throw error
       }
 
       const { insertId } = results
 
-      db.query('SELECT * FROM time_slots WHERE id = ? LIMIT 1', [insertId], (error, results, _) => {
+      db.query('SELECT * FROM reservations WHERE id = ? LIMIT 1', [insertId], (error, results, _) => {
         if (error) {
           throw error
         }
@@ -140,12 +114,12 @@ router.post('/', (req, res) => {
 //   validate(status, {
 //     status: 'required',
 //   }).then((value) => {
-//     db.query('UPDATE time_slotss SET ? WHERE id = ?', [value, id], (error, results, _) => {
+//     db.query('UPDATE reservations SET ? WHERE id = ?', [value, id], (error, results, _) => {
 //       if (error) {
 //         throw error
 //       }
 
-//       db.query('SELECT * FROM time_slotss WHERE id = ? LIMIT 1', [id], (error, results, _) => {
+//       db.query('SELECT * FROM reservations WHERE id = ? LIMIT 1', [id], (error, results, _) => {
 //         if (error) {
 //           throw error
 //         }
@@ -185,14 +159,14 @@ router.post('/', (req, res) => {
 router.delete('/:id', (req, res) => {
   const { id } = req.params
 
-  db.query('SELECT * FROM time_slots WHERE id = ?', [id], (error, results, _) => {
+  db.query('SELECT * FROM reservations WHERE id = ?', [id], (error, results, _) => {
     if (error) {
       throw error
     }
     console.log(results)
-    const [time_slots] = results
+    const [reservations] = results
 
-    db.query('DELETE FROM time_slots WHERE id = ?', [id], (error,_, __) => {
+    db.query('DELETE FROM reservations WHERE id = ?', [id], (error,_, __) => {
       if (error) {
         throw error
       }
@@ -200,7 +174,7 @@ router.delete('/:id', (req, res) => {
       res.send({
         code: 200,
         meta: null,
-        data: time_slots
+        data: reservations
       })
     })
   })
