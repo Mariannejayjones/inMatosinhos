@@ -48,7 +48,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params
 
-  db.query('SELECT * FROM time_slots where id = ?', [id], (error, results) => {
+  db.query('SELECT * FROM time_slots where restaurant_id = ?', [id], (error, results) => {
     if (error) {
       throw error
     }
@@ -83,7 +83,7 @@ router.post('/', (req, res) => {
 
   validate(time_slots, {
     restaurant_id: "required",  
-    day: "required",
+    week_day: "required",
     start_time: "required",
     end_time: "required",
    

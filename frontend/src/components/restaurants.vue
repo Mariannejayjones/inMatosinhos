@@ -60,12 +60,12 @@
           <span>{{restaurant.address}}</span>
             <br>
           <span>{{restaurant.contact}}</span>
-
+<!-- goToRestaurant @click with restaurant.id is to bring through each restaurant when selected -->
           <v-card-actions>
             <v-btn
               color="orange darken-4"
               text
-              @click="goToRestaurant(restaurant.id)">
+              @click="goToRestaurant(restaurant.id)"> 
               VER
             </v-btn>
           </v-card-actions>
@@ -86,12 +86,14 @@ import axios from 'axios'
   }),
 
   methods:{
+ // retrieves all restaurants //   
     getRestaurants () {
       axios.get('http://localhost:3000/restaurant').then((response) => {
         this.restaurants = response.data.data 
       })
     },
 
+// get each image from restaurants - return a defualt image if none available // 
     getRestaurantImage (image) {
       if (!image) {
         return require('../assets/default.png') //create default img
@@ -99,6 +101,7 @@ import axios from 'axios'
         return require('../assets/' + image)
     },
 
+//in response to the "VER" btn - redirects to each restaurants own path // 
     goToRestaurant(id){
         this.$router.push('/restaurant/' + id)
     }

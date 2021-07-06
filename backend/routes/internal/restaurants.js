@@ -44,7 +44,7 @@ router.get('/', (req, res) => {
   })
 })
 
-// get restaurant via id //
+// get one restaurant via id //
 router.get('/:id', (req, res) => {
   const { id } = req.params
 
@@ -52,35 +52,21 @@ router.get('/:id', (req, res) => {
     if (error) {
       throw error
     }
+    
+// get all menus items via that restaurants id -  in order not to have multiple similar requests // 
 
     db.query('SELECT * FROM restaurant_menu_items where restaurant_id = ?', [id], (error, menu_results) => {
       if (error) {
         throw error
       }
 
-      merged_data = restaurant_results[0]
-      merged_data.menu = menu_results
-
+      restaurant_data = restaurant_results[0]  // results for one restaurant via id // array is at 0 - to sort one - 
+      restaurant_data.menu = menu_results // results all menus for that restaurant via id // 
+ 
       res.send({
         code: 200,
-        data: merged_data
+        data: restaurant_data
       })
-    })
-  })
-})
-
-// get restaurant by name //
-router.get('/:id/name', (req, res) => {
-  const { id } = req.params
-
-  db.query('SELECT name FROM restaurant where id = ?', [id], (error, results) => {
-    if (error) {
-      throw error
-    }
-
-    res.send({
-      code: 200,
-      data: results
     })
   })
 })
