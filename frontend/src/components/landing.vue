@@ -85,30 +85,30 @@
 }
 
 .btnRestaurant{
-    position: relative;
-    left:0%;
-    bottom: 70px;
-    background-color: #05c1c1;
-    color: white;
-    opacity: 0.9;
-    font-size: 15px;
-    font-weight: bold;
-    width:60%;
-    text-transform: uppercase;
-    padding: 8px 16px;
-    cursor: pointer;
-    border: none;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  position: relative;
+  left:0%;
+  bottom: 70px;
+  background-color: #05c1c1;
+  color: white;
+  opacity: 0.9;
+  font-size: 15px;
+  font-weight: bold;
+  width:60%;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  cursor: pointer;
+  border: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 
-  .btnRestaurant:hover{
-    background-color: #ff7503;
-    color: white;
+.btnRestaurant:hover{
+  background-color: #ff7503;
+  color: white;
   }
 
-  img[data-v-5016e0b7]{
-    border-style: none;
-    height: 200px;
+img[data-v-5016e0b7]{
+  border-style: none;
+  height: 200px;
 }
 
 em{

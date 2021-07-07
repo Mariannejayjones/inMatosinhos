@@ -39,15 +39,15 @@
 
         <div class="my-4 text-subtitle-1">
           <div>
-          Preço médio: {{avgPrice}} 
+            Preço médio: {{avgPrice}} €
           </div>
           <div>
-          {{restaurant.category}}
+            {{restaurant.category}}
           </div>
         </div>
 
       </v-card-text>
-
+<!-- time slots available for that day -->
       <v-card-title>
         HORÁRIO DISPONÍVEL: 
          <div class="date">
@@ -58,7 +58,7 @@
 
       <v-card-text>
         <v-row>
-          <v-col cols="12" sm= "2">
+          <v-col cols="12">
             <v-chip-group
               v-model="selection"
               active-class="orange darken-4 white--text"
@@ -82,9 +82,46 @@
           @click="reserve()">
           Reserve
         </v-btn>
+</v-card-actions>
+        <!-- Menu -->
 
-        <!-- ementa -->
-        <div class="text-center">
+        <modal
+        :show="showModal">
+          {{checkItem.name}}
+          {{checkItem.id}}
+          
+          <!-- <input type="number" :value="checkItem.quantity" @change="updateSelectedItemQuantityAndTotal()">
+          <input type="text" disabled v-model="checkItem.subTotal"> -->
+          <!-- <button @click="addToCart">Add to cart</button> -->
+        </modal>
+
+          <div class="row">
+            <div class="col-lg-9">
+              <v-card
+              v-if="restaurant.menu">
+
+                <v-card-title class="text-h5">
+                  EMENTA
+                </v-card-title>
+
+                <v-card-text
+                    v-if="checkItems">
+                      <v-list-item>
+                        <v-list-item-content
+                          v-for="checkItem in checkItems"
+                          :key="checkItem.id">
+                            <v-list-item-title>{{checkItem.name}}</v-list-item-title>
+                            <input type="number" :value="checkItem.quantity" @change="updateSelectedItemQuantityAndTotal($event,checkItem)"/>quantity
+                            <input type="text" disabled v-model="checkItem.subTotal"/>subtotal 
+                            <button @click="addToCart()">Add to cart</button>
+                        </v-list-item-content>
+                      </v-list-item>
+                </v-card-text>
+
+              </v-card>
+            </div>
+          </div>
+        <!-- <div class="text-center">
           <v-dialog
             v-model="dialog"
             width="500">
@@ -106,7 +143,7 @@
                   EMENTA
                 </v-card-title>
 
-<!-- // @change - allows the event to vary if selected or not selected -in this case, within the checkbox selection // -->
+<!- // @change - allows the event to vary if selected or not selected -in this case, within the checkbox selection // -->
                 <v-card-text 
                   v-for="menuItem in restaurant.menu"
                   :key="menuItem.id">
@@ -115,19 +152,23 @@
                     <div>{{menuItem.price}}€</div>
                     <br>
                 </v-card-text>
-<!-- // menuitem quantity still needed ---!!!!! // -->
+
               <v-divider></v-divider>
 
-                <v-card-text
+                <!-- <v-card-text
                   v-if="checkItems">
                     <v-list-item>
                       <v-list-item-content
                         v-for="checkItem in checkItems"
                         :key="checkItem.id">
                           <v-list-item-title>{{checkItem.name}}</v-list-item-title>
+                          <input type="number" :value="checkItem.quantity" @change="updateSelectedItemQuantityAndTotal($event,checkItem)"/>quantity
+                          <input type="text" disabled v-model="checkItem.subTotal"/>subtotal 
+                          <button @click="addToCart()">Add to cart</button>
                       </v-list-item-content>
                     </v-list-item>
-                </v-card-text>
+                </v-card-text> -->
+                
 
                 <div class="total">
                   Total: {{totalPrice.toFixed(2)}} € 
@@ -141,17 +182,17 @@
                     color="orange daken-4"
                     text
                     @click="addTocheckItems()">
-                  ENCOMENDAR
+                      ENCOMENDAR
                   </v-btn>
               </v-card-actions>
             </v-card>
 
-          </v-dialog>
-        </div>
-      </v-card-actions>
-    </v-card>
+         <!-- </v-dialog>
+        </div> -->
+      <!-- </v-card-actions> -->
+   <!-- </v-card> -->
 
-  </div>
+ </div>
 </template>
 
 <script>
@@ -161,14 +202,16 @@ import axios from 'axios'
       loading: false,
       selection: 1,
       dialogm1: '',
-      dialog: false,
-      menuItems: {}, 
+      dialog: false, 
       eachItem: [],
       checkItems: [],
       restaurant: null,
       timeSlots: {},
       todaySlots: null,
-      pickedDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
+      pickedDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      cartItems: [],
+      showModal: false, 
+      checkItem: []
     }),
 
     methods: {
@@ -186,16 +229,34 @@ import axios from 'axios'
           this.loading = false
       },
 
-      addTocheckItems() {
-        this.loading = true
-        axios.get(`http://localhost:3000/menuitems/${this.eachItem}/name`).then((response) => {
-          console.log(response)
-            this.dishItem = response.data.data
-        })
-            this.loading = false
-              this.checkItems.push(this.dishItem)
-                this.eachItem = null
+      updateSelectedItemQuantityAndTotal (quantity) {
+        this.checkItem.quantity = quantity
+        this.checkItem.subTotal = quantity * this.checkItem.price
       },
+
+      // addTocheckItems() {
+      //   this.loading = true
+      //   axios.get(`http://localhost:3000/menuitems/${this.eachItem}/name`).then((response) => {
+      //     console.log(response)
+      //       this.dishItem = response.data.data
+      //   })
+      //       this.loading = false
+      //         this.checkItems.push(this.dishItem)
+      //           this.eachItem = null
+      // },
+
+      addToCart(item) {
+        this.checkItem = item
+        this.checkItem.quantity = 1
+        this.checkItem.subTotal = item.price
+
+        this.showModal = true
+      },
+
+      // toCart() {
+      //   this.cartItems.push(_.cloneDeep(this.cartItem))
+      //   this.cartItem = null
+      // },
 
       getRestaurant() {
         this.loading = true
@@ -226,6 +287,7 @@ import axios from 'axios'
 // if checkbox selected - add amount or substract amount  - price and name // 
       changeOrder(event, menuItem){
         if(event.target.checked) {
+          menuItem.quantity = 1
           this.checkItems.push(menuItem);
           this.totalPrice += parseFloat(menuItem.price); // parseFloat -  converts strings to float- as in decimal number //
         } else {
@@ -235,7 +297,7 @@ import axios from 'axios'
           })
         }
       },
-
+// get time slots for each day for one restaurant // 
       getTodaySlots(){
         this.loading = true
           axios.get('http://localhost:3000/timeslots/' + this.$route.params.id + '/restaurant/') .then((response) => { 
@@ -252,11 +314,17 @@ import axios from 'axios'
     computed:{
     // create average between the max price and min price range -  max + min divided by 2 // 
       avgPrice() {
-        if(!this.restaurant.pricerangemaxmin||!this.restaurant.pricerangemax){return}
+        if(!this.restaurant.pricerangemin||!this.restaurant.pricerangemax){return}
         let min = this.restaurant.pricerangemin
-        let max  = this.restaurant.pricerangemax
+        let max = this.restaurant.pricerangemax
           return (max + min) /2
-      }
+      }, 
+
+      // total(){
+      //   return _.sumBy(this.cartItems,cartItem =>{
+      //     return cartItem.subTotal
+      //   })
+      // }
 
     },
 
@@ -291,23 +359,28 @@ import axios from 'axios'
 
 }
 
-.restaurantMain{
-  margin-top: -40px;
+.restaurantMain { 
+  margin-top: -80px;
   margin-bottom: 60px;
 }
 
-label{
+label {
   padding:5px;
   color: #05c1c1;
 }
 
-.total{
+.total {
   color: #05c1c1;
   padding: 25px;
 }
 
-.date{
-  margin-left:10pc
+.date { 
+  margin-left:10px;
 }
 
+button, input, select, textarea {
+  background-color: white;
+  color: #ff7503;
+  padding: 4px;
+}
 </style>
