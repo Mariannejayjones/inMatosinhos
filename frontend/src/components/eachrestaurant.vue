@@ -65,8 +65,9 @@
               column>
              
               <v-chip
-              v-for="todaySlot in this.todaySlots"
-              :key="todaySlot.id">
+              v-for="todaySlot in todaySlots"
+              :key="todaySlot.id"
+              @click="selection = todaySlot.id">
               {{todaySlot.start_time}}
               </v-chip>
 
@@ -89,10 +90,7 @@
         :show="showModal">
           {{checkItem.name}}
           {{checkItem.id}}
-          
-          <!-- <input type="number" :value="checkItem.quantity" @change="updateSelectedItemQuantityAndTotal()">
-          <input type="text" disabled v-model="checkItem.subTotal"> -->
-          <!-- <button @click="addToCart">Add to cart</button> -->
+
         </modal>
 
           <div class="row">
@@ -111,9 +109,8 @@
                           v-for="checkItem in checkItems"
                           :key="checkItem.id">
                             <v-list-item-title>{{checkItem.name}}</v-list-item-title>
-                            <input type="number" :value="checkItem.quantity" @change="updateSelectedItemQuantityAndTotal($event,checkItem)"/>quantity
-                            <input type="text" disabled v-model="checkItem.subTotal"/>subtotal 
-                            <button @click="addToCart()">Add to cart</button>
+                            <v-list-item-title>Doses: {{checkItem.quantity}}</v-list-item-title>
+                            <v-list-item-title>Subtotal: {{checkItem.subTotal}} €</v-list-item-title>                        
                         </v-list-item-content>
                       </v-list-item>
                 </v-card-text>
@@ -147,9 +144,11 @@
                 <v-card-text 
                   v-for="menuItem in restaurant.menu"
                   :key="menuItem.id">
-                    <input v-model="eachItem" type="checkbox" :id="menuItem.id" :value="menuItem.id" @change="changeOrder($event, menuItem)">
+                    <input v-model="eachItem" type="checkbox" :id="menuItem.id" :value="menuItem.id">
+                    <input type="number" v-model.number="menuItem.quantity">
                     <label :for="menuItem.id">{{menuItem.name}}</label>
                     <div>{{menuItem.price}}€</div>
+                    <button @click="addOrder(menuItem)"> Add to cart</button>
                     <br>
                 </v-card-text>
 
@@ -171,7 +170,7 @@
                 
 
                 <div class="total">
-                  Total: {{totalPrice.toFixed(2)}} € 
+                  Total: {{total}} € 
 <!-- // toFixed - enforces number of decimal places to change // -->
                 </div>
 
@@ -197,6 +196,8 @@
 
 <script>
 import axios from 'axios'
+import _ from 'lodash'
+
   export default {
     data: () => ({
       loading: false,
@@ -211,7 +212,8 @@ import axios from 'axios'
       pickedDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       cartItems: [],
       showModal: false, 
-      checkItem: []
+      checkItem: [], 
+      // quantity: 1
     }),
 
     methods: {
@@ -220,18 +222,14 @@ import axios from 'axios'
         let reservationInfo = {
           "user_id": 1,
           "restaurant_id": this.$route.params.id,
-          "reservation_time": this.selection,
+          "reservation_time": this.timeSlots[this.selection].start_time,
           "reservation_day" : this.pickedDate
         }
+        debugger
         axios.post(`http://localhost:3000/reservations`, reservationInfo).then((response) => {
           console.log(response)
         })
           this.loading = false
-      },
-
-      updateSelectedItemQuantityAndTotal (quantity) {
-        this.checkItem.quantity = quantity
-        this.checkItem.subTotal = quantity * this.checkItem.price
       },
 
       // addTocheckItems() {
@@ -263,6 +261,9 @@ import axios from 'axios'
         axios.get('http://localhost:3000/restaurant/' + this.$route.params.id).then((response) => {
           console.log(response)
           this.restaurant = response.data.data
+          _.forEach(this.restaurant.menu, menuItem => {
+            menuItem.quantity = 1
+          })
         })
         this.loading= false
 
@@ -284,19 +285,35 @@ import axios from 'axios'
           })
           this.loading= false
       },
-// if checkbox selected - add amount or substract amount  - price and name // 
-      changeOrder(event, menuItem){
-        if(event.target.checked) {
-          menuItem.quantity = 1
-          this.checkItems.push(menuItem);
-          this.totalPrice += parseFloat(menuItem.price); // parseFloat -  converts strings to float- as in decimal number //
-        } else {
-          this.totalPrice -= parseFloat(menuItem.price);
-          this.checkItems = this.checkItems.filter(function(obj){ // function applied to all items in list -  Filter 
-            return obj.id !== menuItem.id // function must return true for all items we want to keep listed as selected 
-          })
-        }
-      },
+
+      addOrder(menuItem){
+        let foundedMenuItem = _.find(this.checkItems, checkItem => {
+          return checkItem.id === menuItem.id
+        })
+
+          if (foundedMenuItem) {
+            foundedMenuItem.quantity += menuItem.quantity
+            foundedMenuItem.subTotal = foundedMenuItem.quantity * menuItem.price
+          } else {
+            menuItem.subTotal = menuItem.quantity * menuItem.price
+            this.checkItems.push(_.cloneDeep(menuItem))
+            }
+            
+            this.quantity = 1
+            this.eachItem = false
+ },
+      // if checkbox selected - add amount or substract amount  - price and name // 
+      //   if(event.target.checked) {
+      //     menuItem.quantity = quantity
+      //     this.checkItems.push(menuItem);
+      //     this.totalPrice += parseFloat(menuItem.price); // parseFloat -  converts strings to float- as in decimal number //
+      //   } else {
+      //     this.totalPrice -= parseFloat(menuItem.price);
+      //     this.checkItems = this.checkItems.filter(function(obj){ // function applied to all items in list -  Filter 
+      //       return obj.id !== menuItem.id // function must return true for all items we want to keep listed as selected 
+      //     })
+      //   }
+      // },
 // get time slots for each day for one restaurant // 
       getTodaySlots(){
         this.loading = true
@@ -319,6 +336,23 @@ import axios from 'axios'
         let max = this.restaurant.pricerangemax
           return (max + min) /2
       }, 
+
+      total(){
+        let a = _.sumBy(this.checkItems, 'subTotal') 
+        return a
+     
+      }
+
+//        const ans = _(data)
+//   .groupBy('platformId')
+//   .map((platform, id) => ({
+//     platformId: id,
+//     payout: _.sumBy(platform, 'payout'),
+//     numOfPeople: _.sumBy(platform, 'numOfPeople')
+//   }))
+//   .value()
+
+// console.log(ans);
 
       // total(){
       //   return _.sumBy(this.cartItems,cartItem =>{

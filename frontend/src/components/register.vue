@@ -13,6 +13,12 @@
           <input type="text" required="required" id="name" name="name" placeholder="Nome e Apelido">
         </div>
         <div>
+          <label for="dateOfBirth">Data de Nascimento</label>
+        </div>
+        <div>
+          <input type="date" required="required" id="dateOfBirth" name="dateOfBirth" placeholder="dd/mm/yyyy">
+        </div>
+        <div>
           <label for="email">E-mail</label>
         </div>
         <div>
@@ -31,10 +37,10 @@
           <input type="password" required="required" id="password" name="password" placeholder="verificar password">
         </div> 
         <div>
-          <label for="dateOfBirth">Data de Nascimento</label>
+          <label for="text">Morada completa</label>
         </div>
         <div>
-          <input type="date" required="required" id="dateOfBirth" name="dateOfBirth" placeholder="dd/mm/yyyy">
+          <input type="text" required="required" id="address" placeholder="Morada completa">
         </div>
 
         <br>
