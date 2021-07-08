@@ -33,21 +33,21 @@
 
       <div style="width: 25%; max-height: 250px;">
         <img :src="require('@/assets/store.png')"/>
-        <button id="goToStore" @click="goToStore()" class="btnRestaurant">
+        <button id="goToStore" @click="goToStore()" class="btnStore">
           Lojas
         </button>
       </div>
 
       <div style="width: 25%; max-height: 250px;">
         <img :src="require('@/assets/services.png')"/>
-        <button id="goToServices" @click="goToServices()" class="btnRestaurant">
+        <button id="goToServices" @click="goToServices()" class="btnServices">
         Serviços
         </button>
       </div>
 
       <div style="width: 25%; max-height: 250px">
         <img :src="require('@/assets/agenda.png')"/>
-        <button id="goToAgenda" @click="goToAgenda()" class="btnRestaurant">
+        <button id="goToAgenda" @click="goToAgenda()" class="btnAgenda">
         Agenda
         </button>
       </div>
@@ -84,7 +84,7 @@
   color: #05c1c1;
 }
 
-.btnRestaurant{
+.btnRestaurant, .btnStore, .btnServices, .btnAgenda{
   position: relative;
   left:0%;
   bottom: 70px;
@@ -101,12 +101,12 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 
-.btnRestaurant:hover{
+.btnRestaurant:hover, .btnStore:hover, .btnServices:hover, .btnAgenda:hover{
   background-color: #ff7503;
   color: white;
   }
 
-img[data-v-5016e0b7]{
+img{
   border-style: none;
   height: 200px;
 }

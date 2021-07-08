@@ -18,7 +18,7 @@
         height="250"
         :src="getRestaurantImage(restaurant.image)">
       </v-img>
-    <!-- restaurant.image ---- to bring through each image from each restaurant  -->
+
       <v-card-title>{{restaurant.name}}</v-card-title> 
 
       <v-card-text>
@@ -45,14 +45,14 @@
             {{restaurant.category}}
           </div>
         </div>
-
       </v-card-text>
+
 <!-- time slots available for that day -->
       <v-card-title>
         HORÁRIO DISPONÍVEL: 
-         <div class="date">
-          <input type="date" id="date" name="date"
-          v-model="pickedDate">
+          <div class="date">
+            <input type="date" id="date" name="date"
+            v-model="pickedDate">
           </div>
       </v-card-title>
 
@@ -65,10 +65,10 @@
               column>
              
               <v-chip
-              v-for="todaySlot in todaySlots"
-              :key="todaySlot.id"
-              @click="selection = todaySlot.id">
-              {{todaySlot.start_time}}
+                v-for="todaySlot in todaySlots"
+                :key="todaySlot.id"
+                @click="selection = todaySlot.id">
+                {{todaySlot.start_time}}
               </v-chip>
 
             </v-chip-group>
@@ -76,122 +76,119 @@
         </v-row>
       </v-card-text>
 
+      <div class="text-center">
       <v-card-actions>
         <v-btn
           color="orange darken-4"
           text
-          @click="reserve()">
+          @click="reserve(); snackbar = true">
           Reserve
         </v-btn>
-</v-card-actions>
-        <!-- Menu -->
+      </v-card-actions>
 
-        <modal
-        :show="showModal">
-          {{checkItem.name}}
-          {{checkItem.id}}
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+    >
+      {{ text }}
 
-        </modal>
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="cyan"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+  </div>
 
-          <div class="row">
-            <div class="col-lg-9">
-              <v-card
-              v-if="restaurant.menu">
-
-                <v-card-title class="text-h5">
-                  EMENTA
-                </v-card-title>
-
-                <v-card-text
-                    v-if="checkItems">
-                      <v-list-item>
-                        <v-list-item-content
-                          v-for="checkItem in checkItems"
-                          :key="checkItem.id">
-                            <v-list-item-title>{{checkItem.name}}</v-list-item-title>
-                            <v-list-item-title>Doses: {{checkItem.quantity}}</v-list-item-title>
-                            <v-list-item-title>Subtotal: {{checkItem.subTotal}} €</v-list-item-title>                        
-                        </v-list-item-content>
-                      </v-list-item>
-                </v-card-text>
-
-              </v-card>
-            </div>
-          </div>
-        <!-- <div class="text-center">
-          <v-dialog
-            v-model="dialog"
-            width="500">
-
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                color="orange darken-4"
-                text
-                v-bind="attrs"
-                v-on="on"
-                @click="ementa()">
-                Ementa
-              </v-btn>
-            </template>
-
+        <div class="row">
+          <div class="col-lg-12">
             <v-card
               v-if="restaurant.menu">
-                <v-card-title class="text-h5 grey lighten-2">
-                  EMENTA
-                </v-card-title>
-
-<!- // @change - allows the event to vary if selected or not selected -in this case, within the checkbox selection // -->
-                <v-card-text 
-                  v-for="menuItem in restaurant.menu"
-                  :key="menuItem.id">
-                    <input v-model="eachItem" type="checkbox" :id="menuItem.id" :value="menuItem.id">
-                    <input type="number" v-model.number="menuItem.quantity">
-                    <label :for="menuItem.id">{{menuItem.name}}</label>
-                    <div>{{menuItem.price}}€</div>
-                    <button @click="addOrder(menuItem)"> Add to cart</button>
-                    <br>
-                </v-card-text>
-
+            </v-card>
+          </div>
+        </div>
+       
+  
               <v-divider></v-divider>
 
-                <!-- <v-card-text
+              <v-card-text
                   v-if="checkItems">
                     <v-list-item>
                       <v-list-item-content
                         v-for="checkItem in checkItems"
                         :key="checkItem.id">
-                          <v-list-item-title>{{checkItem.name}}</v-list-item-title>
-                          <input type="number" :value="checkItem.quantity" @change="updateSelectedItemQuantityAndTotal($event,checkItem)"/>quantity
-                          <input type="text" disabled v-model="checkItem.subTotal"/>subtotal 
-                          <button @click="addToCart()">Add to cart</button>
+
+                            <v-col cols="12" sm="12">
+                      
+                                <v-list-item-title>{{checkItem.name}}</v-list-item-title>
+                                <v-list-item-title>Doses: {{checkItem.quantity}}</v-list-item-title>
+                                <v-list-item-title>Subtotal: {{checkItem.subTotal}} €</v-list-item-title> 
+                    <br>
+                            </v-col>
+                          
                       </v-list-item-content>
                     </v-list-item>
-                </v-card-text> -->
-                
+              </v-card-text>
 
-                <div class="total">
-                  Total: {{total}} € 
-<!-- // toFixed - enforces number of decimal places to change // -->
-                </div>
+                          <div class="total">
+                            Total: {{total}} € 
+                          </div>
 
-              <!-- encomendar -->
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                  <v-btn
-                    color="orange daken-4"
-                    text
-                    @click="addTocheckItems()">
-                      ENCOMENDAR
-                  </v-btn>
-              </v-card-actions>
-            </v-card>
+                          <div>
+                            <i>* Morada alternativa: *</i><input type="text" id="address" name="address" placeholder="* Morada alternativa *">
+                          </div>  
 
-         <!-- </v-dialog>
-        </div> -->
-      <!-- </v-card-actions> -->
-   <!-- </v-card> -->
+              <div class="text-center">
+                <v-btn
+                  dark
+                  color="orange darken-4"
+                  @click="delivery(); snackbar = true">
+                  Encomendar
+                </v-btn>
 
- </div>
+                <v-snackbar
+                  v-model="snackbar"
+                  :timeout="timeout">
+                  {{ text }}
+
+                  <template v-slot:action="{ attrs }">
+                    <v-btn
+                      color="cyan"
+                      text
+                      v-bind="attrs"
+                      @click="snackbar = false">
+                      Close
+                    </v-btn>
+                  </template>
+                </v-snackbar>
+              </div>   
+
+              <v-divider></v-divider>
+
+              <v-card-title class="text-h5">
+                EMENTA
+              </v-card-title>
+          <v-card-text 
+            v-for="menuItem in restaurant.menu"
+            :key="menuItem.id">
+              <input v-model="eachItem" type="checkbox" :id="menuItem.id" :value="menuItem.id">
+              <input type="number" v-model.number="menuItem.quantity">
+              <label :for="menuItem.id">{{menuItem.name}}</label>
+              <div>{{menuItem.price}}€</div>
+              <button @click="addOrder(menuItem)"> Add to cart</button>
+              <br>
+          </v-card-text>
+
+          
+
+          
+    </v-card> 
+  </div>
 </template>
 
 <script>
@@ -211,12 +208,15 @@ import _ from 'lodash'
       todaySlots: null,
       pickedDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       cartItems: [],
-      showModal: false, 
       checkItem: [], 
-      // quantity: 1
+      snackbar: false,
+      text: 'Reservado com sucesso!',
+      timeout: 2000,
+      deliveryId: null
     }),
 
     methods: {
+      // post reservations to DB //
       reserve() {
         this.loading = true
         let reservationInfo = {
@@ -225,36 +225,52 @@ import _ from 'lodash'
           "reservation_time": this.timeSlots[this.selection].start_time,
           "reservation_day" : this.pickedDate
         }
-        debugger
         axios.post(`http://localhost:3000/reservations`, reservationInfo).then((response) => {
           console.log(response)
         })
           this.loading = false
       },
 
-      // addTocheckItems() {
-      //   this.loading = true
-      //   axios.get(`http://localhost:3000/menuitems/${this.eachItem}/name`).then((response) => {
-      //     console.log(response)
-      //       this.dishItem = response.data.data
-      //   })
-      //       this.loading = false
-      //         this.checkItems.push(this.dishItem)
-      //           this.eachItem = null
-      // },
+      //post deliveries to DB //
+      async delivery() {
+        this.loading = true
+        let deliveryInfo = {
+          "user_id": 1,
+          "restaurant_id": this.$route.params.id,
+          "price": this.total
+        }
+       await axios.post(`http://localhost:3000/delivery`, deliveryInfo) .then(response => {
+          this.deliveryId = response.data.data.id
+            })
+            .catch(errors => {
+                console.log(errors);
+            }); 
+            this.itemsForDelivery(this.deliveryId)
+        this.loading = false
+      },
+
+      itemsForDelivery(id) {
+        this.loading = true
+        for ( var i = 0;  i < this.checkItems.length ;  i++ ) {
+        let deliveryItems = {
+          "delivery_id": id,
+          "quantity": this.checkItems[i].quantity,
+          "restaurant_menu_id": this.checkItems[i].id,
+          "sub_total": this.checkItems[i].subTotal,
+          "price": this.total
+        }
+        axios.post(`http://localhost:3000/deliveryitems`, deliveryItems).then((response) => {
+          console.log(response)
+        })
+        }
+          this.loading = false
+      },
 
       addToCart(item) {
         this.checkItem = item
         this.checkItem.quantity = 1
         this.checkItem.subTotal = item.price
-
-        this.showModal = true
       },
-
-      // toCart() {
-      //   this.cartItems.push(_.cloneDeep(this.cartItem))
-      //   this.cartItem = null
-      // },
 
       getRestaurant() {
         this.loading = true
@@ -302,18 +318,7 @@ import _ from 'lodash'
             this.quantity = 1
             this.eachItem = false
  },
-      // if checkbox selected - add amount or substract amount  - price and name // 
-      //   if(event.target.checked) {
-      //     menuItem.quantity = quantity
-      //     this.checkItems.push(menuItem);
-      //     this.totalPrice += parseFloat(menuItem.price); // parseFloat -  converts strings to float- as in decimal number //
-      //   } else {
-      //     this.totalPrice -= parseFloat(menuItem.price);
-      //     this.checkItems = this.checkItems.filter(function(obj){ // function applied to all items in list -  Filter 
-      //       return obj.id !== menuItem.id // function must return true for all items we want to keep listed as selected 
-      //     })
-      //   }
-      // },
+
 // get time slots for each day for one restaurant // 
       getTodaySlots(){
         this.loading = true
@@ -339,26 +344,9 @@ import _ from 'lodash'
 
       total(){
         let a = _.sumBy(this.checkItems, 'subTotal') 
-        return a
+        return a 
      
       }
-
-//        const ans = _(data)
-//   .groupBy('platformId')
-//   .map((platform, id) => ({
-//     platformId: id,
-//     payout: _.sumBy(platform, 'payout'),
-//     numOfPeople: _.sumBy(platform, 'numOfPeople')
-//   }))
-//   .value()
-
-// console.log(ans);
-
-      // total(){
-      //   return _.sumBy(this.cartItems,cartItem =>{
-      //     return cartItem.subTotal
-      //   })
-      // }
 
     },
 
@@ -417,4 +405,24 @@ button, input, select, textarea {
   color: #ff7503;
   padding: 4px;
 }
+
+.v-list-item__title{
+  color:#05c1c1
+
+}
+
+i{
+  color:#ff7503
+}
+
+#address{
+width: 200px;
+margin-left: 10px
+
+}
+
+
+
+
+
 </style>
