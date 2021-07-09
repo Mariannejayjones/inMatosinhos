@@ -1,4 +1,4 @@
-// const auth = require('../middlewares/auth')
+const auth = require('../middlewares/auth')
 
 const restaurantsRouter = require("./internal/restaurants");
 const restaurantMenuItemsRouter = require("./internal/menuItems");
@@ -6,7 +6,7 @@ const timeSlotsRouter = require("./internal/timeSlots");
 const reservationRouter = require("./internal/reservations");
 const deliveryRouter = require("./internal/delivery");
 const deliveryItemsRouter = require("./internal/deliveryItems");
-// const todosRouter = require('./internal/todos')
+const usersRouter = require("./internal/users");
 // const categoriesRouter = require("./internal/categories");
 
 // const login = require("./public/login");
@@ -17,10 +17,10 @@ module.exports = {
     app.use("/restaurant", restaurantsRouter);
     app.use("/menuitems", restaurantMenuItemsRouter);
     app.use("/timeslots", timeSlotsRouter);
-    app.use("/reservations", reservationRouter);
-    app.use("/delivery", deliveryRouter);
-    app.use("/deliveryItems", deliveryItemsRouter);
-    // app.use('/todos', auth, todosRouter)
+    app.use("/reservations", auth, reservationRouter);
+    app.use("/delivery", auth, deliveryRouter);
+    app.use("/deliveryItems", auth, deliveryItemsRouter);
+    app.use("/users", usersRouter);
 
     // app.use("/categories", auth, categoriesRouter)
 

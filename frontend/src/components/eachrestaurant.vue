@@ -154,7 +154,7 @@
                 <v-snackbar
                   v-model="snackbar"
                   :timeout="timeout">
-                  {{ text }}
+                  {{ text2 }}
 
                   <template v-slot:action="{ attrs }">
                     <v-btn
@@ -343,8 +343,8 @@ import _ from 'lodash'
       }, 
 
       total(){
-        let a = _.sumBy(this.checkItems, 'subTotal') 
-        return a 
+        let done = _.sumBy(this.checkItems, 'subTotal') 
+        return done 
      
       }
 
