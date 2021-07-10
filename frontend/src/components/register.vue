@@ -1,12 +1,14 @@
 <template>
-  <div id="vuejs">
+  <div>
     <main id="mainForm" style="display: flex;">
       <form id="registerForm" action class="registerForm">
         <div class="formHeader">
-          <span @click="closeForm()" class="closeBtn"> x </span>
+          <button @click="closeForm = !closeForm" class="closeBtn"> x </button>
           <h1 class="formTitle">Registe-se</h1>
         </div>
+
         <div class="container">
+        <div>
           <label for="name">Nome e Apelido</label>
         </div>
         <div>
@@ -25,6 +27,12 @@
           <input type="email" required="required" id="email" name="email" placeholder="E-mail">
         </div> 
         <div>
+          <label for="contact">Contacto</label>
+        </div>
+        <div>
+          <input type="number" required="required" id="contact" name="contact" placeholder="contacto">
+        </div> 
+        <div>
           <label for="password">Password</label>
         </div>
         <div>
@@ -38,30 +46,25 @@
         </div>
 
         <div>
-          <!-- <button @click="addForm()" type="submit" value="Enviar Registo"/> -->
+          <input @click="addForm()" type="submit" value="Enviar Registo"/>
+        </div>
         </div>
       </form>
     </main>
   </div>
 </template>
 
-// <script>
+<script>
 
 //  export default {
 //     methods:{
-//       // addForm(){
-//       //   this.$router.push('/restaurants')
-
-//       //   axios.put('http://localhost:3000/restaurant').then((response) => {
-//       //   this.restaurants = response.data.data 
-//       // })
-//       // },
-
-// // function closeForm() {
-// //   document.getElementById('mainForm').style.display = "none";
-// // }
+//       addForm(){
+//         this.$router.push('/restaurants')
+//       }
+//     }
+//   }
     
-// </script>
+</script>
 
 
 <style scoped>
