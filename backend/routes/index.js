@@ -7,9 +7,8 @@ const reservationRouter = require("./internal/reservations");
 const deliveryRouter = require("./internal/delivery");
 const deliveryItemsRouter = require("./internal/deliveryItems");
 const usersRouter = require("./internal/users");
-// const categoriesRouter = require("./internal/categories");
-
-// const login = require("./public/login");
+const categoriesRouter = require("./internal/categories");
+const login = require("./public/login");
 // const bcrypt = require("bcrypt");
 
 module.exports = {
@@ -20,11 +19,9 @@ module.exports = {
     app.use("/reservations", auth, reservationRouter);
     app.use("/delivery", auth, deliveryRouter);
     app.use("/deliveryItems", auth, deliveryItemsRouter);
-    app.use("/users", usersRouter);
-
-    // app.use("/categories", auth, categoriesRouter)
-
-    // app.post("/login", login);
+    app.use("/users", auth,usersRouter);
+    app.use("/categories", categoriesRouter)
+    app.post("/login", login);
 
     // app.get("/encrypt", async (req, res) => {
       // test route

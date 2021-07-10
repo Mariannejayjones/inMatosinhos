@@ -1,25 +1,60 @@
 <template>
   <div class="container">
     <div class="login-box">
-      <input placeholder="Email" type="text">
-      <input placeholder="Password" type="password">
-      <button @click="toRestaurants()">Login</button>
+      <input placeholder="Email" v-model="email" type="text">
+      <input placeholder="Password" v-model="password" type="password">
+      <button @click="login()">Login</button>
       <button id="openRegister" @click="openRegister()" class="btnRegister">Registe-se</button>
+      <button id="openRegisterOwner" @click="openRegisterOwner()" class="btnRegisterOwner">Novo Comércio</button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions} from 'vuex'
+import axios from 'axios'
   export default {
+    data(){ 
+      return{
+        email: null,
+        password: null
+      }
+  
+    },
       // once logged in send to restaurants // 
     methods:{
-      toRestaurants(){
-        this.$router.push('/restaurants')
+      ...mapActions([
+        'setUser',
+        'setToken'
+      ]),
+
+      login() {
+
+        let logUser = {
+          "email": this.email,
+          "password": this.password
+        }
+
+        axios.post('http://localhost:3000/login', logUser).then((response) => {
+            console.log(response);
+            this.$router.push('/restaurants')
+            this.setUser(response.data.user)
+            this.setToken(response.data.token)
+        }, (error) => {
+            console.log(error);
+        });
+
       },
       // on click open register form // 
       openRegister(){
         this.$router.push('/register')
+      },
+      //on click open register owner form //
+      openRegisterOwner(){
+        this.$router.push('/registerOwner')
       }
+
+
 
     }
 }
@@ -51,7 +86,7 @@ body {
 	left: 65%;
 	right: 0;
 	width: 360px;
-	height: 355px;
+	height: 395px;
 	opacity:0.8;
 
 }

@@ -6,6 +6,7 @@ import landing from  '../components/landing.vue'
 import restaurants from '../components/restaurants.vue'
 import eachrestaurant from '../components/eachrestaurant.vue'
 import register from '../components/register.vue'
+import registerOwner from '../components/registerOwner.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -33,6 +34,11 @@ const routes = [
     component: register
   },
 
+  {
+    path: '/registerOwner',
+    name: 'registerOwner',
+    component: registerOwner
+  },
   {
     path: '/restaurant/:id',
     name: 'eachrestaurant',

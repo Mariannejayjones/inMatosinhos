@@ -20,12 +20,16 @@ module.exports = (req, res) => { validate(req.body,
               if (match) {
                 const secret = "B18fbWIyeU1utFA31mzGaVyzjyL9ZnfP"
   
-                delete results[0].password // para não ter de ser preciso a row na BD
-  
+                delete results[0].password
+
                 //sign to crypt secret // 
                 const token = jwt.sign({id: results[0].id}, secret) // will give me my token
-  
-                res.send(token)
+        
+                  res.send({
+                    code: 200,
+                    user: results[0],
+                    token: token
+                  })
   
               } else {
                 res.status(400).send('Cannot find any account that matches the given email and password')
