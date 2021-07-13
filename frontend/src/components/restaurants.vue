@@ -3,8 +3,8 @@
 <!--layout for search bar and searchboxes-->
     <div class="search-container">
       <div class="searchBox">
-        <input placeholder="PESQUISAR" type="search">
-        <button id="searchBox" class="btn-search">GO!</button>
+        <input placeholder="PESQUISAR" v-model="keywords" type="search">
+        <button @click="search()" id="searchBox" class="btn-search">GO!</button>
       </div>
     </div>
       
@@ -78,7 +78,8 @@ import axios from 'axios'
   data:() => ({
     restaurants: [],
     categories: [],
-    selectedCategories: []
+    selectedCategories: [],
+    keywords: null
   }),
 
   methods:{
@@ -88,7 +89,7 @@ import axios from 'axios'
         this.restaurants = response.data.data 
       })
     },
-    // retireves all categories 
+    // retrieves all categories 
     getCategories () {
       axios.get('http://localhost:3000/categories').then((response) =>{
         this.categories = response.data
@@ -104,8 +105,14 @@ import axios from 'axios'
     },
 
     //in response to the "VER" btn - redirects to each restaurants own path // 
-    goToRestaurant(id){
+    goToRestaurant(id) {
         this.$router.push('/restaurant/' + id)
+    },
+
+    search() {
+      axios.get('http://localhost:3000/restaurant/search?keywords=' + this.keywords).then((response) =>{
+        this.restaurants = response.data.data
+      })
     }
   },
 

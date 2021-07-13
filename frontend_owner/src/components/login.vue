@@ -20,7 +20,7 @@ import axios from 'axios'
       }
   
     },
-      // once logged in send to restaurants // 
+
     methods:{
       ...mapActions([
         'setUser',

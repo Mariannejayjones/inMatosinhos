@@ -143,7 +143,7 @@
               <div class="total">
                 Total: {{total}} € 
               </div>
-
+            
               <div>
                 <i>* Morada alternativa: *</i><input type="text" id="address" name="address" placeholder="* Morada alternativa *">
               </div>  
@@ -167,9 +167,10 @@
             v-for="menuItem in restaurant.menu"
             :key="menuItem.id">
               <input type="number" v-model="eachItem" :id="menuItem.id" v-model.number="menuItem.quantity">
-              <label :for="menuItem.id">{{menuItem.name}}</label>
+              <label :for="menuItem.id">{{menuItem.name}}</label><br>
+              <i>*{{menuItem.description}}</i><br>
               <div>{{menuItem.price}}€</div>
-              <button @click="addOrder(menuItem)"> Add to cart</button>
+              <button @click="addOrder(menuItem)" outlined> Add to cart</button>
               <br>
           </v-card-text>       
         
