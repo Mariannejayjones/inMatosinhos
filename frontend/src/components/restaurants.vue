@@ -6,13 +6,22 @@
         <input placeholder="PESQUISAR" type="search">
         <button id="searchBox" class="btn-search">GO!</button>
       </div>
+    </div>
       
-      <div class="searchCheckboxes"
-      v-for="category in categories"
-      :key="category.id">
-        <input type="checkbox" name="categories" :value=category.id :id=category.id><br><br>
-        <label for="categories">{{category.name}}</label><br>
-      </div>
+    <div class="search-checkbox-Container">  
+    
+      <v-row class="mt-12"
+      width="800px">
+        <v-col cols="12" sm="3" md="3" lg="3" xl="3"
+         v-for="category in categories"
+          :key="category.id">
+          <div class="searchCheckboxes">
+            <input type="checkbox" name="categories" v-model="selectedCategories" :value=category.id :id=category.id>
+            <label for="categories">{{category.name}}</label>
+          </div>
+      </v-col>
+      </v-row>
+      
     </div>
 
     <div>
@@ -44,7 +53,7 @@
           <span>{{restaurant.address}}</span>
             <br>
           <span>{{restaurant.contact}}</span>
-<!-- goToRestaurant @click with restaurant.id is to bring through each restaurant when selected -->
+          <!-- goToRestaurant @click with restaurant.id is to bring through each restaurant when selected -->
           <v-card-actions>
             <v-btn
               color="orange darken-4"
@@ -64,27 +73,29 @@
 
 <script>
 import axios from 'axios'
+
  export default {
   data:() => ({
     restaurants: [],
-    categories: []
+    categories: [],
+    selectedCategories: []
   }),
 
   methods:{
- // retrieves all restaurants //   
+    // retrieves all restaurants //   
     getRestaurants () {
       axios.get('http://localhost:3000/restaurant').then((response) => {
         this.restaurants = response.data.data 
       })
     },
-
+    // retireves all categories 
     getCategories () {
       axios.get('http://localhost:3000/categories').then((response) =>{
         this.categories = response.data
       })
     },
 
-// get each image from restaurants - return a defualt image if none available // 
+    // get each image from restaurants - return a defualt image if none available // 
     getRestaurantImage (image) {
       if (!image) {
         return require('../assets/default.png') //create default img
@@ -92,7 +103,7 @@ import axios from 'axios'
         return require('../assets/' + image)
     },
 
-//in response to the "VER" btn - redirects to each restaurants own path // 
+    //in response to the "VER" btn - redirects to each restaurants own path // 
     goToRestaurant(id){
         this.$router.push('/restaurant/' + id)
     }
@@ -103,7 +114,9 @@ import axios from 'axios'
         await this.getCategories()
         
 
-    }
+    },
+
+    
 
 
 
@@ -116,38 +129,38 @@ import axios from 'axios'
 <style scoped>
 
 .search-container{
-    background-color: #05c1c1;
-    height: 45px;
-    width: 600px;
-    margin-left: 33%;
-    margin-top: -90px;
-    padding:10px 10px;
-    border-radius: 5px;
-    position: relative;
+  background-color: #05c1c1;
+  height: 45px;
+  width: 600px;
+  margin-left: 33%;
+  margin-top: -270px;
+  padding:10px 10px;
+  border-radius: 5px;
+  position: relative;
 
 }
 
 .btn-search{
-    background-color: #05c1c1;
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
-    text-transform: uppercase;
-    padding: 7px 24px;
-    border: none;
-    border-radius: 5px;
-    top: -10px;
-    left: 74%;
-    height: 45px;
-    width: 40px;
-    padding: 10px;
-    position: relative;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #05c1c1;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 7px 24px;
+  border: none;
+  border-radius: 5px;
+  top: -4px;
+  left: 74%;
+  height: 45px;
+  width: 40px;
+  padding: 10px;
+  position: relative;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .btn-search:hover{
-    background-color: #ff7503;
-    color: white;
+  background-color: #ff7503;
+  color: white;
 }
 
 ::placeholder{
@@ -158,13 +171,13 @@ import axios from 'axios'
 .searchCheckboxes{
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top:25px;
-  margin-left:63px;
+  flex-wrap: nowrap;
+  justify-content: right;
+  margin-top: 25px;
+  margin-left: 63px;
   padding: 5px;
-  align-items: flex-start;
-  width:423px;
+  align-items: center;
+  width: 150px;
 }
 
 label{
@@ -190,6 +203,10 @@ label{
 
 span{
   margin-left: 20px;
+}
+
+.searchBox{
+  margin-top: -6px;
 }
 /* change checkbox colors and alignment with time */
 </style>

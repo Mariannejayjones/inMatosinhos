@@ -12,37 +12,37 @@
           <label for="name">Nome e Apelido</label>
         </div>
         <div>
-          <input type="text" required="required"  id="name" name="name" placeholder="Nome e Apelido">
+          <input type="text" required="required" v-model="name" id="name" name="name" placeholder="Nome e Apelido">
         </div>
         <div>
           <label for="dateOfBirth">Data de Nascimento</label>
         </div>
         <div>
-          <input type="date" required="required"  id="dateOfBirth" name="dateOfBirth" placeholder="dd/mm/yyyy">
+          <input type="date" required="required" v-model="dateOfBirth" id="dateOfBirth" name="dateOfBirth" placeholder="dd/mm/yyyy">
         </div>
         <div>
           <label for="email">E-mail</label>
         </div>
         <div>
-          <input type="email" required="required"  id="email" name="email" placeholder="E-mail">
+          <input type="email" required="required" v-model="email" id="email" name="email" placeholder="E-mail">
         </div> 
         <div>
           <label for="contact">Contacto</label>
         </div>
         <div>
-          <input type="number" required="required"  id="contact" name="contact" placeholder="contacto">
+          <input type="number" required="required" v-model="contact" id="contact" name="contact" placeholder="contacto">
         </div> 
         <div>
           <label for="password">Password</label>
         </div>
         <div>
-          <input type="password" required="required"  id="password" name="password" placeholder="password">
+          <input type="password" required="required" v-model="password" id="password" name="password" placeholder="password">
         </div> 
         <div>
           <label for="text">Morada completa</label>
         </div>
         <div>
-          <input type="text" required="required"  id="address" placeholder="Morada completa">
+          <input type="text" required="required" v-model="address" id="address" placeholder="Morada completa">
         </div>
 
         <div>
@@ -55,53 +55,50 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
  export default {
+   data() {
+     return {
+       name: null,
+       dateOfBirth: null,
+       email: null,
+       contact: null,
+       password: null,
+       address: null
+     }
+   },
+   
+
+
   methods:{
     closeForm() {
     document.getElementById('mainForm').style.display = "none";
+    },
+  
+
+      addForm() {
+
+        let submitInfo= {
+        "name": this.name,
+        "address": this.address,
+        "date_of_birth": this.dateOfBirth,
+        "phone": this.contact,
+        "email": this.email,
+        "password": this.password
+        }
+        console.log(submitInfo)
+    axios.post(`http://localhost:3000/users`, submitInfo).then((response) => {
+      debugger
+          this.newUser = response.data.data.id
+          alert('verificação enviada para o seu e-mail!')
+                    
+      })
+        .catch((error) => {
+        console.log(error)
+        });
+        this.closeForm()
+      }
     }
-  },
-
-//       async addForm() {
-//         if(this.create.password != this.create.password) {
-//           return
-//         }
-
-//         let submitInfo= {
-//         "name": this.create.name,
-//         "address": this.create.address,
-//         "date_of_birth": this.create.dateOfBirth,
-//         "phone": this.create.contact,
-//         "email": this.create.email,
-//         "password": this.create.password
-//         }
-
-//       await axios.post(`http://localhost:3000/users`, submitInfo).then((response) => {
-//           this.$swal.fire({
-//             icon: 'success',
-//             title: 'Success!',
-//             text: response.status,
-//             showConfirmButton: false,
-//             timer: 1500
-//           }) 
-//           this.newUser = response.data.data.id
-                    
-//       })
-//         .catch((error) => {
-//           this.$swal.fire({
-//               icon: 'error',
-//               title: 'ERROR!',
-//               text: error,
-//               showConfirmButton: false,
-//               timer: 1500
-//           })
-                    
-//         });
-
-//           this.addForm() 
-        
-//       }
 }
 
     

@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import{mapGetters, mapActions} from 'vuex'
+import{ mapGetters, mapActions } from 'vuex'
   export default{
     // if login is true- send to restaurant page // 
     methods:{

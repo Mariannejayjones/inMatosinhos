@@ -15,57 +15,57 @@
           <label for="name">Nome e Apelido</label>
         </div>
         <div>
-          <input type="text" required="required" id="name" name="name" placeholder="Nome e Apelido">
+          <input type="text" required="required" v-model="name" id="name" name="name" placeholder="Nome e Apelido">
         </div>
         <div>
           <label for="dateOfBirth">Data de Nascimento</label>
         </div>
         <div>
-          <input type="date" required="required" id="dateOfBirth" name="dateOfBirth" placeholder="dd/mm/yyyy">
+          <input type="date" required="required" v-model="dateOfBirth" id="dateOfBirth" name="dateOfBirth" placeholder="dd/mm/yyyy">
         </div>
         <div>
           <label for="email">E-mail</label>
         </div>
         <div>
-          <input type="email" required="required" id="email" name="email" placeholder="E-mail">
+          <input type="email" required="required" v-model="email" id="email" name="email" placeholder="E-mail">
         </div>
         <div>
           <label for="password">Password</label>
         </div>
         <div>
-          <input type="password" required="required" id="password" name="password" placeholder="password">
+          <input type="password" required="required" v-model="password" id="password" name="password" placeholder="password">
         </div> 
         <div>
           <label for="name">Nome do establecimento</label>
         </div>
         <div>
-          <input type="text" required="required" id="name" name="name" placeholder="Nome do establecimento">
+          <input type="text" required="required" v-model="nameOfBusiness" id="nameOfBusiness" name="nameOfBusiness" placeholder="Nome do establecimento">
         </div>
         <div>
           <label for="contact">Contactos do establecimento</label>
         </div>
         <div>
-          <input type="number" required="required" id="contact" placeholder="Contato telefónico">
+          <input type="number" required="required" v-model="contact" id="contact" placeholder="Contato telefónico">
         </div>
         <div>
           <label for="text">Morada completa</label>
         </div>
         <div>
-          <input type="text" required="required" id="address" placeholder="Morada completa">
+          <input type="text" required="required" v-model="address" id="address" placeholder="Morada completa">
         </div>
         <div>
           <label for="text">Ementa</label>
         </div>
         <div>
-          <input type="file" required="required" id="ementa" name="ementa">
+          <input type="file" required="required"  id="ementa" name="ementa">
         </div>
         <div>
           <label for="message">Esclarecimentos/outros</label>
         </div>
         <div>
-          <textarea name="message" id="message" rows="10"></textarea>
+          <textarea name="message" v-model="message" id="message" rows="10"></textarea>
         </div>
-        
+      
         <br>
 
         <div>
@@ -78,14 +78,53 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 export default {
+  data (){
+    return {
+       name: null,
+       dateOfBirth: null,
+       email: null,
+       contact: null,
+       password: null,
+       address: null,
+       nameOfBusiness: null,
+       message: null
+    }
+  },
     methods:{
       closeForm() {
       document.getElementById('mainForm').style.display = "none";
+    },
+
+addForm() {
+
+        let submitInfo= {
+        "name": this.name,
+        "address": this.address,
+        "date_of_birth": this.dateOfBirth,
+        "phone": this.contact,
+        "email": this.email,
+        "password": this.password,
+        "is_admin": 1
+        
+        }
+        console.log(submitInfo)
+        axios.post(`http://localhost:3000/users`, submitInfo).then((response) => {
+          this.newUser = response.data.data.id
+          alert('verificação enviada para o seu e-mail!')
+                    
+      })
+        .catch((error) => {
+        console.log(error)
+        alert('ERROR')
+        });
+        this.closeForm()
+      }
     }
-    }
+
   }
+
     
 </script>
 

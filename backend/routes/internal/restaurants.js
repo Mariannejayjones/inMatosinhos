@@ -71,28 +71,28 @@ router.get('/:id', (req, res) => {
   })
 }),
 
-// get all search terms //
+// get all search words //
 router.get('/search', (req, res) => {
-  const { search_terms } = req.params
+  const { search_ } = req.params
 
   // initialise query string
   var query_string = 'SELECT * FROM restaurant WHERE' 
-
   // TODO: split terms into word list
   var search_words = ['spam', 'eggs', 'ham']
 
-  for(var i=0; i<search_words.length; i++) {
+  for(var i=0; i<search_words.length; i++) { //increment search through each 
     query_string += ' name LIKE %' + search_words[i] + '%'
+    if (i<search_words.length-1){
+    query_string += ' OR '
+    }
   }
-
 
   db.query(query_string, (error, restaurant_results) => {
     if (error) {
       throw error
     }
     
-// get all menus items via that restaurants id -  in order not to have multiple similar requests // 
-
+    // get all menus items via that restaurants id -  in order not to have multiple similar requests // 
     db.query('SELECT * FROM restaurant_menu_items where restaurant_id = ?', [id], (error, menu_results) => {
       if (error) {
         throw error

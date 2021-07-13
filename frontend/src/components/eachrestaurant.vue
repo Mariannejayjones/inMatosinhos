@@ -80,7 +80,8 @@
         <v-btn
           color="orange darken-4"
           text
-          @click="reserve(); snackbar = true">
+          outlined
+          @click="reserve(); text ='Reservado com sucesso!';snackbar = true">
           Reserve
         </v-btn>
       </v-card-actions>
@@ -114,58 +115,47 @@
   
               <v-divider></v-divider>
 
+              <v-card-title class="text-h5">
+                O seu pedido:
+              </v-card-title>
               <v-card-text
                   v-if="checkItems">
                   <v-row>
-                    <v-list-item>
-                      <v-list-item-content
-                        v-for="checkItem in checkItems"
+                     <v-col cols="12" sm="12"
+                     v-for="checkItem in checkItems"
                         :key="checkItem.id">
+                    <v-list-item>
+                      <v-list-item-content>
 
-                            <v-col cols="12" sm="12">
-                      
+                                    
                                 <v-list-item-title>{{checkItem.name}}</v-list-item-title>
                                 <v-list-item-title>Doses: {{checkItem.quantity}}</v-list-item-title>
                                 <v-list-item-title>Subtotal: {{checkItem.subTotal}} €</v-list-item-title> 
                                 <br>
-                            </v-col>
+                            
                           
                       </v-list-item-content>
                     </v-list-item>
+                    </v-col>
                     </v-row>
               </v-card-text>
 
-                          <div class="total">
-                            Total: {{total}} € 
-                          </div>
+              <div class="total">
+                Total: {{total}} € 
+              </div>
 
-                          <div>
-                            <i>* Morada alternativa: *</i><input type="text" id="address" name="address" placeholder="* Morada alternativa *">
-                          </div>  
-
+              <div>
+                <i>* Morada alternativa: *</i><input type="text" id="address" name="address" placeholder="* Morada alternativa *">
+              </div>  
+              {{user.address}}
               <div class="text-center">
                 <v-btn
                   dark
                   color="orange darken-4"
-                  @click="delivery(); snackbar = true">
+                  @click="delivery(); text ='Encomendado com sucesso!'; snackbar = true">
                   Encomendar
                 </v-btn>
-
-                <v-snackbar
-                  v-model="snackbar"
-                  :timeout="timeout">
-                  {{ text }}
-
-                  <template v-slot:action="{ attrs }">
-                    <v-btn
-                      color="cyan"
-                      text
-                      v-bind="attrs"
-                      @click="snackbar = false">
-                      Close
-                    </v-btn>
-                  </template>
-                </v-snackbar>
+              
               </div>   
 
               <v-divider></v-divider>
@@ -190,6 +180,7 @@
 <script>
 import axios from 'axios'
 import _ from 'lodash'
+import { mapGetters } from 'vuex'
 
   export default {
     data: () => ({
@@ -342,7 +333,11 @@ import _ from 'lodash'
         let done = _.sumBy(this.checkItems, 'subTotal') 
         return done 
      
-      }
+      },
+
+      ...mapGetters([
+      'user',
+      ])
 
     },
 

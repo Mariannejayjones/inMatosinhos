@@ -90,8 +90,8 @@ body {
 	bottom: 42%;
 	left: 65%;
 	right: 0;
-	width: 360px;
-	height: 395px;
+	width: 380px;
+	height: 400px;
 	opacity:0.8;
 
 }
