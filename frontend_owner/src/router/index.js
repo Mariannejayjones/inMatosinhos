@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import login from  '../components/login.vue'
-import youRestaurant from  '../components/youRestaurantList.vue'
+import youRestaurant from  '../components/yourRestaurantList.vue'
+import eachrestaurant from '../components/eachrestaurant.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -17,6 +18,14 @@ const routes = [
     name: 'youRestaurant',
     component: youRestaurant
   },
+
+  {
+    path: '/restaurants/:id',
+    name: 'eachrestaurant',
+    component: eachrestaurant
+  },
+
+
 
 
 ]

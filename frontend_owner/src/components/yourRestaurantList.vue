@@ -26,15 +26,31 @@
 
             <template v-slot:item="props">
                 <tr>
+                    <td >{{ props.item.name }}</td>
                     <td >{{ props.item.category }}</td>
                     <td>{{ props.item.address }}</td>
                     <td>{{ props.item.contact }}</td>
+                    <td @click="pushToRestaurant(props.item)" style="pointer: click">SHOW 
+                        <v-btn @click="editRestaurant">EDITAR</v-btn>
+                    </td>
+
                     
-                    <td >                        
-                        <i class="fas fa-search mr-3" style="cursor: pointer" @click="openMaintenaceModal(props.item, 'check')"> </i>
-                        <i class="fas fa-edit" style="cursor: pointer" @click="openMaintenaceModal(props.item, 'edit')"> </i>
+                    <!-- <td>  -->
+
+      <!-- <v-btn
+      fab
+      dark
+      large
+      color="cyan"
+      @click="openMaintenaceModal(props.item, 'check')>
+      <v-icon dark>
+        mdi-pencil
+      </v-icon>
+    </v-btn>
+               -->
+                        <!-- <i class="fas fa-edit" style="cursor: pointer" @click="openMaintenaceModal(props.item, 'edit')"> </i> -->
                                                                                  
-                    </td>                    
+                    <!-- </td>                     -->
                 </tr>
             </template>
         </v-data-table>
@@ -44,6 +60,7 @@
 
 <script>
 import axios from 'axios'
+import{ mapGetters } from 'vuex'
     export default {
 
         data () {
@@ -68,10 +85,17 @@ import axios from 'axios'
                 
             }
         },
+
+      computed:{
+        ...mapGetters([
+          'user',
+          'token'
+        ]),
+      },
     
         methods: {
-            getRestaurants () {
-                axios.get(`http://localhost:3000/restaurants/${this.user.id}`).then((response) => {
+            getOwnedRestaurants () {
+                axios.get(`http://localhost:3000/ownedRestaurants/${this.user.id}`).then((response) => {
                    
                     this.restaurants = response.data.data 
                 })
@@ -128,11 +152,16 @@ import axios from 'axios'
                 this.getDoctors()                        
             },
 
+            pushToRestaurant(item){
+                debugger
+              this.$router.push(`restaurants/${item.restaurant_id}`)
+            }
+
                 
         },
         
         created() {
-            this.getRestaurants()
+            this.getOwnedRestaurants()
   
             
         }

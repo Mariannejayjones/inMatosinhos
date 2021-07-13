@@ -1,5 +1,5 @@
 const router = require('express').Router()
-// const { validate } = require('indicative/validator')
+const { validate } = require('indicative/validator')
 
 const db = require('../../db')
 
@@ -112,34 +112,37 @@ router.get('/:id/name', (req, res) => {
 //   })
 // })
 
-// router.put('/:id', (req, res) => {
-//   const { id } = req.params
-//   const status = req.body
+router.put('/:id', (req, res) => {
+  const { id } = req.params
+  const items = req.body
 
-//   validate(status, {
-//     status: 'required',
-//   }).then((value) => {
-//     db.query('UPDATE restaurant_menu_itemss SET ? WHERE id = ?', [value, id], (error, results, _) => {
-//       if (error) {
-//         throw error
-//       }
+  validate(items, {
+    restaurant_id: 'required',
+    name: 'required',
+    description: 'required',
+    price: 'required'
+  }).then((value) => {
+    db.query('UPDATE restaurant_menu_items SET ? WHERE id = ?', [value, id], (error, results, _) => {
+      if (error) {
+        throw error
+      }
 
-//       db.query('SELECT * FROM restaurant_menu_itemss WHERE id = ? LIMIT 1', [id], (error, results, _) => {
-//         if (error) {
-//           throw error
-//         }
+      db.query('SELECT * FROM restaurant_menu_items WHERE id = ? LIMIT 1', [id], (error, results, _) => {
+        if (error) {
+          throw error
+        }
 
-//         res.send({
-//           code: 200,
-//           meta: null,
-//           data: results[0]
-//         })
-//       })
-//     })
-//   }).catch((error) => {
-//     res.status(400).send(error)
-//   })
-// })
+        res.send({
+          code: 200,
+          meta: null,
+          data: results[0]
+        })
+      })
+    })
+  }).catch((error) => {
+    res.status(400).send(error)
+  })
+})
 
 // router.patch('/:id/completed', (req, res) => {
 //   const { id } = req.params

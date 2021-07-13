@@ -8,6 +8,7 @@ import VueAxios from'vue-axios'
 import {boot} from '@/app-bootstrap'
 
 
+
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
 boot().then(() => {
