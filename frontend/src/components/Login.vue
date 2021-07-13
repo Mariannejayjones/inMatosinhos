@@ -6,6 +6,7 @@
       <button @click="login()">Login</button>
       <button id="openRegister" @click="openRegister()" class="btnRegister">Registe-se</button>
       <button id="openRegisterOwner" @click="openRegisterOwner()" class="btnRegisterOwner">Novo Comércio</button>
+      <button id="close" @click="goToLanding()"> x </button>
     </div>
   </div>
 </template>
@@ -44,6 +45,10 @@ import axios from 'axios'
             console.log(error);
         });
 
+      },
+
+      goToLanding(){
+        this.$router.push('/landing')
       },
       // on click open register form // 
       openRegister(){

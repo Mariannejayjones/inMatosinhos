@@ -12,7 +12,7 @@ module.exports = (req, res) => { validate(req.body,
       db.query('SELECT * FROM users WHERE email = ?', [value.email], (error, results) => {
         
         if (results.length === 0) {
-          res.status(400).send('Cannot find any account that matches the given email and password')
+          res.status(400).send('Não existe conta com este Email-password')
   
         } else {
           bcrypt.compare(value.password, results[0].password)

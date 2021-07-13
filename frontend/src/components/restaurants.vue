@@ -7,27 +7,11 @@
         <button id="searchBox" class="btn-search">GO!</button>
       </div>
       
-      <div class="searchCheckboxes">
-        <input type="checkbox" id="portuguesa" name="portuguesa" value="portuguesa"><br><br>
-        <label for="portuguesa">Portuguesa</label><br>
-        <input type="checkbox" id="marisco" name="marisc" value="marisc"><br><br>
-        <label for="marisco">Marisco</label><br>
-        <input type="checkbox" id="sushi" name="sushi" value="sushi"><br><br>
-        <label for="sushi">Sushi</label><br>
-        <input type="checkbox" id="italiana" name="italiana" value="italiana"><br><br>
-        <label for="italiana">Italiana</label><br><br>
-        <input type="checkbox" id="steakhouse" name="steakhouse" value="steakhouse"><br><br>
-        <label for="steakhouse">Steakhouse</label><br>
-        <input type="checkbox" id="chinesa" name="chinesa" value="chinesa"><br><br>
-        <label for="chinesa">Chinesa</label><br>
-        <input type="checkbox" id="indiana" name="indiana" value="indiana"><br><br>
-        <label for="indiana">Indiana</label><br>
-        <input type="checkbox" id="peixe" name="peixe" value="peixe"><br><br>
-        <label for="peixe">Peixe</label><br>
-        <input type="checkbox" id="grill" name="grill" value="grill"><br><br>
-        <label for="grill">Grill</label><br>
-        <input type="checkbox" id="tapas" name="tapas" value="tapas"><br><br>
-        <label for="tapas">Tapas</label><br>
+      <div class="searchCheckboxes"
+      v-for="category in categories"
+      :key="category.id">
+        <input type="checkbox" name="categories" :value=category.id :id=category.id><br><br>
+        <label for="categories">{{category.name}}</label><br>
       </div>
     </div>
 
@@ -82,7 +66,8 @@
 import axios from 'axios'
  export default {
   data:() => ({
-    restaurants: []
+    restaurants: [],
+    categories: []
   }),
 
   methods:{
@@ -90,6 +75,12 @@ import axios from 'axios'
     getRestaurants () {
       axios.get('http://localhost:3000/restaurant').then((response) => {
         this.restaurants = response.data.data 
+      })
+    },
+
+    getCategories () {
+      axios.get('http://localhost:3000/categories').then((response) =>{
+        this.categories = response.data
       })
     },
 
@@ -109,6 +100,8 @@ import axios from 'axios'
 
   async created() {
         await this.getRestaurants()
+        await this.getCategories()
+        
 
     }
 

@@ -3,9 +3,9 @@
   <div>
     <div class="top-banner">
       <!-- <img :src="require('../assets/backgroundImage.png')"/> // this image for landing and login --> 
-      <button id="loginBox" @click="showLogin = !showLogin" class="btn-login">
+      <!-- <button id="loginBox" @click="showLogin = !showLogin" class="btn-login">
         Login
-      </button>
+      </button> -->
     </div>
 
     <div class="intro">
@@ -32,21 +32,21 @@
       </div>
 
       <div style="width: 25%; max-height: 250px;">
-        <img :src="require('@/assets/store.png')"/>
+        <img :src="require('@/assets/store.png')" style="opacity: 0.3;"/>
         <button id="goToStore" @click="goToStore()" class="btnStore">
           Lojas
         </button>
       </div>
 
       <div style="width: 25%; max-height: 250px;">
-        <img :src="require('@/assets/services.png')"/>
+        <img :src="require('@/assets/services.png')" style="opacity: 0.3;"/>
         <button id="goToServices" @click="goToServices()" class="btnServices">
         Serviços
         </button>
       </div>
 
       <div style="width: 25%; max-height: 250px">
-        <img :src="require('@/assets/agenda.png')"/>
+        <img :src="require('@/assets/agenda.png')" style="opacity: 0.3;"/>
         <button id="goToAgenda" @click="goToAgenda()" class="btnAgenda">
         Agenda
         </button>
@@ -101,7 +101,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 
-.btnRestaurant:hover, .btnStore:hover, .btnServices:hover, .btnAgenda:hover{
+.btnRestaurant:hover{
   background-color: #ff7503;
   color: white;
   }

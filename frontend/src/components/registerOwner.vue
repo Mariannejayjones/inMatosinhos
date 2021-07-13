@@ -4,7 +4,7 @@
       <form id="registerForm" action class="registerForm">
 
         <div class="formHeader">
-          <button @click="closeForm = !closeForm" class="closeBtn"> x </button>
+          <button @click="closeForm()" class="closeBtn"> x </button>
         </div>
         <div class="form-subheader">
           <h2 class="formSubtitle">REGISTE * Novo Comércio *</h2>
@@ -78,6 +78,14 @@
 </template>
 
 <script>
+
+export default {
+    methods:{
+      closeForm() {
+      document.getElementById('mainForm').style.display = "none";
+    }
+    }
+  }
     
 </script>
 

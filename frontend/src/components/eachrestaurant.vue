@@ -34,7 +34,6 @@
             readonly
             size="14">
           </v-rating>
-
         </v-row>
 
         <div class="my-4 text-subtitle-1">
@@ -88,8 +87,8 @@
 
     <v-snackbar
       v-model="snackbar"
-      :timeout="timeout"
-    >
+      :timeout="timeout">
+
       {{ text }}
 
       <template v-slot:action="{ attrs }">
@@ -97,8 +96,7 @@
           color="cyan"
           text
           v-bind="attrs"
-          @click="snackbar = false"
-        >
+          @click="snackbar = false">
           Close
         </v-btn>
       </template>
@@ -118,6 +116,7 @@
 
               <v-card-text
                   v-if="checkItems">
+                  <v-row>
                     <v-list-item>
                       <v-list-item-content
                         v-for="checkItem in checkItems"
@@ -128,11 +127,12 @@
                                 <v-list-item-title>{{checkItem.name}}</v-list-item-title>
                                 <v-list-item-title>Doses: {{checkItem.quantity}}</v-list-item-title>
                                 <v-list-item-title>Subtotal: {{checkItem.subTotal}} €</v-list-item-title> 
-                    <br>
+                                <br>
                             </v-col>
                           
                       </v-list-item-content>
                     </v-list-item>
+                    </v-row>
               </v-card-text>
 
                           <div class="total">
@@ -154,7 +154,7 @@
                 <v-snackbar
                   v-model="snackbar"
                   :timeout="timeout">
-                  {{ text2 }}
+                  {{ text }}
 
                   <template v-slot:action="{ attrs }">
                     <v-btn
@@ -176,17 +176,13 @@
           <v-card-text 
             v-for="menuItem in restaurant.menu"
             :key="menuItem.id">
-              <input v-model="eachItem" type="checkbox" :id="menuItem.id" :value="menuItem.id">
-              <input type="number" v-model.number="menuItem.quantity">
+              <input type="number" v-model="eachItem" :id="menuItem.id" v-model.number="menuItem.quantity">
               <label :for="menuItem.id">{{menuItem.name}}</label>
               <div>{{menuItem.price}}€</div>
               <button @click="addOrder(menuItem)"> Add to cart</button>
               <br>
-          </v-card-text>
-
-          
-
-          
+          </v-card-text>       
+        
     </v-card> 
   </div>
 </template>
@@ -292,7 +288,7 @@ import _ from 'lodash'
         return require('../assets/' + image)
       },
 
-// get time slot for every restaurant - each id //
+      // get time slot for every restaurant - each id //
       getTimeSlot(){
         this.loading = true
           axios.get('http://localhost:3000/timeslots/' + this.$route.params.id).then((response) => { 
@@ -319,7 +315,7 @@ import _ from 'lodash'
             this.eachItem = false
  },
 
-// get time slots for each day for one restaurant // 
+      // get time slots for each day for one restaurant // 
       getTodaySlots(){
         this.loading = true
           axios.get('http://localhost:3000/timeslots/' + this.$route.params.id + '/restaurant/') .then((response) => { 
@@ -334,7 +330,7 @@ import _ from 'lodash'
     },
 
     computed:{
-    // create average between the max price and min price range -  max + min divided by 2 // 
+      // create average between the max price and min price range -  max + min divided by 2 // 
       avgPrice() {
         if(!this.restaurant.pricerangemin||!this.restaurant.pricerangemax){return}
         let min = this.restaurant.pricerangemin
@@ -368,7 +364,7 @@ import _ from 'lodash'
 
 <style scoped>
 
-.v-card__title {
+.v-card__title{
   align-items: center;
   display: flex;
   flex-wrap: wrap;
@@ -381,26 +377,26 @@ import _ from 'lodash'
 
 }
 
-.restaurantMain { 
+.restaurantMain{ 
   margin-top: -80px;
   margin-bottom: 60px;
 }
 
-label {
+label{
   padding:5px;
   color: #05c1c1;
 }
 
-.total {
+.total{
   color: #05c1c1;
   padding: 25px;
 }
 
-.date { 
+.date{ 
   margin-left:10px;
 }
 
-button, input, select, textarea {
+button, input, select, textarea{
   background-color: white;
   color: #ff7503;
   padding: 4px;
@@ -412,7 +408,8 @@ button, input, select, textarea {
 }
 
 i{
-  color:#ff7503
+  color:#ff7503;
+  margin-left: 30px
 }
 
 #address{

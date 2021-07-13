@@ -69,6 +69,44 @@ router.get('/:id', (req, res) => {
       })
     })
   })
+}),
+
+// get all search terms //
+router.get('/search', (req, res) => {
+  const { search_terms } = req.params
+
+  // initialise query string
+  var query_string = 'SELECT * FROM restaurant WHERE' 
+
+  // TODO: split terms into word list
+  var search_words = ['spam', 'eggs', 'ham']
+
+  for(var i=0; i<search_words.length; i++) {
+    query_string += ' name LIKE %' + search_words[i] + '%'
+  }
+
+
+  db.query(query_string, (error, restaurant_results) => {
+    if (error) {
+      throw error
+    }
+    
+// get all menus items via that restaurants id -  in order not to have multiple similar requests // 
+
+    db.query('SELECT * FROM restaurant_menu_items where restaurant_id = ?', [id], (error, menu_results) => {
+      if (error) {
+        throw error
+      }
+
+      restaurant_data = restaurant_results[0]  // results for one restaurant via id // array is at 0 - to sort one - 
+      restaurant_data.menu = menu_results // results all menus for that restaurant via id // 
+ 
+      res.send({
+        code: 200,
+        data: restaurant_data
+      })
+    })
+  })
 })
 
 
