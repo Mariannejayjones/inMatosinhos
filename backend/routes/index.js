@@ -25,15 +25,5 @@ module.exports = {
     app.use("/categories", categoriesRouter)
     app.post("/login", login);
 
-    // app.get("/encrypt", async (req, res) => {
-      // test route
-
-      // receive string from password to convert to hash //
-    //   let result = await bcrypt.hash("987654", 10); // needs to have async when you have await
-    //   res.send({
-    //     unencrypted: "12345",
-    //     encrypted: result,
-    //   });
-    // });
   },
 };

@@ -40,8 +40,10 @@
           <div>
             Preço médio: {{avgPrice}} €
           </div>
-          <div>
-            {{restaurant.category}}
+          <div
+          v-for="category in restaurant.categories"
+          :key="category.id">
+            {{category.name}}
           </div>
         </div>
       </v-card-text>

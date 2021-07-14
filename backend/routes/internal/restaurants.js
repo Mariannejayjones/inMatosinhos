@@ -45,17 +45,24 @@ router.get('/', (req, res) => {
 
 // get all search terms //
 router.get('/search', (req, res) => {
-  const { keywords } = req.query
+  const { keywords,categories } = req.query
 
-  let query_string = 'SELECT * FROM restaurant WHERE ' // initialise query string
-  const search_words = keywords.split(' ') // splits search terms into seperate words by removing white spaces between words // 
+  let query_string = 'SELECT restaurant.* FROM restaurant,restaurants_categories WHERE (' // initialise query string
+  const search_words = keywords.split(' ') // splits search terms into seperate words by removing and spliting white spaces between words // 
 
-  for(var i=0; i<search_words.length; i++) { //increment search through each 
-    query_string += 'name LIKE "%' + search_words[i] + '%"'
-    if (i<search_words.length-1){
+  for(let i=0; i<search_words.length; i++) { // increment search through each word and for each word to add condition "name like"
+    query_string += 'name LIKE "%' + search_words[i] + '%"' // filtering by name 
+    if (i<search_words.length-1){ // unless its the last item adds an OR to the query 
       query_string += ' OR '
     }
   }
+  if (categories){ // on top of that add categories to the search 
+    const check_categories = categories.split(',') 
+    query_string += ') AND (restaurants_categories.restaurant_id = restaurant.id AND restaurants_categories.category_id IN (' + check_categories.join(',') + ')'
+  }
+  query_string += ')'
+
+//NELSON!!!!!!!!!!!!!!!!!!!!!!!! 
 
   db.query(query_string, (error, results) => {
     if (error) {
@@ -84,13 +91,19 @@ router.get('/:id', (req, res) => {
       if (error) {
         throw error
       }
+      db.query('SELECT c.* FROM categories c join restaurants_categories rc ON c.id = rc.category_id and rc.restaurant_id= ?', [id], (error, category_results) => {
+        if (error) {
+          throw error
+        }
 
-      restaurant_data = restaurant_results[0]  // results for one restaurant via id // array is at 0 - to sort one - 
-      restaurant_data.menu = menu_results // results all menus for that restaurant via id // 
+        restaurant_data = restaurant_results[0]  // results for one restaurant via id // array is at 0 - to sort one - 
+        restaurant_data.menu = menu_results // results all menus for that restaurant via id // 
+        restaurant_data.categories = category_results // result for each category of a specific restaurant //
 
-      res.send({
-        code: 200,
-        data: restaurant_data
+        res.send({
+          code: 200,
+          data: restaurant_data
+        })
       })
     })
   })

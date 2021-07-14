@@ -16,14 +16,14 @@
          v-for="category in categories"
           :key="category.id">
           <div class="searchCheckboxes">
-            <input type="checkbox" name="categories" v-model="selectedCategories" :value=category.id :id=category.id>
+            <input type="checkbox" name="categories" @change="search()" v-model="selectedCategories" :value=category.id :id=category.id>
             <label for="categories">{{category.name}}</label>
           </div>
       </v-col>
       </v-row>
-      
+     
     </div>
-
+ <!-- // why click or check was freaking out ?!!!!!!! -->
     <div>
       <v-row class="mt-12"
       width="1200px">
@@ -79,7 +79,7 @@ import axios from 'axios'
     restaurants: [],
     categories: [],
     selectedCategories: [],
-    keywords: null
+    keywords: ''
   }),
 
   methods:{
@@ -104,13 +104,13 @@ import axios from 'axios'
         return require('../assets/' + image)
     },
 
-    //in response to the "VER" btn - redirects to each restaurants own path // 
+    // in response to the "VER" btn - redirects to each restaurants own path // 
     goToRestaurant(id) {
         this.$router.push('/restaurant/' + id)
     },
-
+    // retrieves all keyword searches alongside the categories selected in checkboxes -  search futher filters the checkbox selection // 
     search() {
-      axios.get('http://localhost:3000/restaurant/search?keywords=' + this.keywords).then((response) =>{
+      axios.get('http://localhost:3000/restaurant/search?keywords=' + this.keywords + '&categories=' + this.selectedCategories.join(',')).then((response) =>{
         this.restaurants = response.data.data
       })
     }
