@@ -91,7 +91,8 @@
           <v-card-text 
             v-for="menuItem in restaurant.menu"
             :key="menuItem.id">
-              <label :for="menuItem.id">{{menuItem.name}}</label>
+              <label :for="menuItem.id">{{menuItem.name}}</label><br>
+              <i>*{{menuItem.description}}</i><br>
               <div>{{menuItem.price}}€</div>
               <br>
               <v-btn @click="Editar(menuItem.id)">EDITAR</v-btn>

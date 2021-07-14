@@ -22,7 +22,6 @@
     <template v-slot:item="props">
       <tr>
         <td >{{ props.item.name }}</td>
-        <td >{{ props.item.category }}</td>
         <td>{{ props.item.address }}</td>
         <td>{{ props.item.contact }}</td>
         <td @click="pushToRestaurant(props.item)" style="pointer: click">SHOW 
@@ -71,7 +70,6 @@ export default {
             sortable: false,
             value: 'name',
           },       
-          { text: 'Categorias', value: 'categories', align: 'center' },
           { text: 'Morada', value: 'address', align: 'center' },
           { text: 'Contacto', value: 'contact', align: 'center' },  
           { text: 'Editar', value: 'edit', align: 'center'}
