@@ -6,7 +6,7 @@
       <button @click="login()">Login</button>
       <button id="openRegister" @click="openRegister()" class="btnRegister">Registe-se</button>
       <button id="openRegisterOwner" @click="openRegisterOwner()" class="btnRegisterOwner">Novo Comércio</button>
-      <button id="close" @click="goToLanding()"> x </button>
+      <button id="close" @click="goToLanding()"> Fechar </button>
     </div>
   </div>
 </template>
@@ -80,21 +80,20 @@ body{
 	color: #fff;
 }
 
-.login-box{
-	background-color: darkcyan;
-	margin: auto auto;
-	padding: 40px;
-	border-radius: 5px;
-	box-shadow: 0 0 10px #000;
-	position: absolute;
-	top: 115px;
-	bottom: 42%;
-	left: 65%;
-	right: 0;
-	width: 380px;
-	height: 400px;
-	opacity:0.8;
-
+.login-box {
+  background-color: darkcyan;
+  margin: auto auto;
+  padding: 40px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #000;
+  position: absolute;
+  top: 375px;
+  bottom: 42%;
+  left: 25px;
+  right: 0;
+  width: 450px;
+  height: 450px;
+  opacity: 0.8;
 }
 
 .login-box:before{
