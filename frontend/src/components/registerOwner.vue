@@ -119,9 +119,10 @@ export default {
           alert('ERROR')
         });
         this.closeForm()
-      }
+        this.$router.push('/landing')
+      },
+    
     }
-
 }
    
 </script>
