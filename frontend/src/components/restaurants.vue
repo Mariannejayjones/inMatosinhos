@@ -23,9 +23,8 @@
       </v-row>
      
     </div>
- <!-- // why click or check was freaking out ?!!!!!!! -->
     <div>
-      <v-row class="mt-12 restaurants-container"
+      <v-row class="mt-4 restaurants-container"
       width="1200px">
 
         <v-col cols="12" sm="6" md="4" lg="4" xl="4"

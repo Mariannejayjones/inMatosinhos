@@ -6,7 +6,7 @@
     </div>
 
     <div class="intro">
-      <div id="sub-intro">
+      <div id="sub-intro" style="margin-left: -30px;">
         <em>
           "Só é preciso perceber
           a beleza que está aí, à nossa frente: 
@@ -18,7 +18,7 @@
           com alegria e gratidão.""
         </em>
       </div>
-   </div>
+    </div>
 
     <div style="display: flex; justify-content: space-around; padding-left: 7%; padding-bottom: 38px; margin-left: -45px;">
       <div style="width: 25%; max-height: 250px;">
@@ -54,19 +54,20 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        
-      }
-       },
-// on click - go to restaurant page // 
-    methods:{
-      goToRestaurant(){
-          this.$router.push('/restaurants')
-      }
+export default {
+  data() {
+    return {
+      
+    }
+  },
+
+  // on click - go to restaurant page // 
+  methods: {
+    goToRestaurant(){
+      this.$router.push('/restaurants')
     }
   }
+}
    
 </script>
 

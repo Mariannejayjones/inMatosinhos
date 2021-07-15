@@ -388,7 +388,7 @@ button, input, select, textarea{
   background-color: white;
   color: #ff7503;
   padding: 4px;
-  width:50px;
+  width:70px;
 }
 
 .v-list-item__title{
