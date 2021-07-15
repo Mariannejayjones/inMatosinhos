@@ -1,6 +1,7 @@
 <template>
 <!-- landing layout --->
   <div>
+    
     <div class="top-banner">
       <!-- <img :src="require('../assets/backgroundImage.png')"/> // this image for landing and login --> 
     </div>

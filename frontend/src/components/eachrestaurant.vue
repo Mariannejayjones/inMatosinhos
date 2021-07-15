@@ -80,9 +80,9 @@
       <div class="text-center">
       <v-card-actions>
         <v-btn
-          color="orange darken-4"
-          text
-          outlined
+          class="delivery-button"
+          dark
+          color="orange darken-4"       
           @click="reserve(); text ='Reservado com sucesso!';snackbar = true">
           Reserve
         </v-btn>
@@ -141,12 +141,13 @@
           Total: {{total}} € 
         </div>
             
-        <div>
+        <div class="address-input" >
           <i>* Morada alternativa: *</i><input type="text" id="address" name="address" placeholder="* Morada alternativa *">
         </div>  
         {{this.currentAddress}}
         <div class="text-center">
           <v-btn
+            class="delivery-button"
             dark
             color="orange darken-4"
             @click="delivery(); text ='Encomendado com sucesso!'; snackbar = true">
@@ -162,12 +163,18 @@
           <v-card-text 
           v-for="menuItem in restaurant.menu"
           :key="menuItem.id">
-            <input type="number" v-model="eachItem" :id="menuItem.id" v-model.number="menuItem.quantity">
-            <label :for="menuItem.id">.{{menuItem.name}}</label><br>
-            <i>{{menuItem.description}}</i><br>
-            <div>{{menuItem.price}}€</div>
-            <button @click="addOrder(menuItem)" outlined> Add to cart</button>
-            <br>
+            <div style="background-color: #00000008; padding: 15px;">
+              <label :for="menuItem.id">.{{menuItem.name}}</label>
+              <div class="menu-item-price">{{menuItem.price}}€</div>
+            
+              <br>
+              <i>{{menuItem.description}}</i><br>
+              
+
+              <input type="number" v-model="eachItem" :id="menuItem.id" v-model.number="menuItem.quantity">
+              <button class="add-to-cart-button" @click="addOrder(menuItem)" outlined> Add to cart</button>
+              <br>
+            </div>
           </v-card-text>       
         
     </v-card> 
@@ -330,7 +337,15 @@ export default {
 
     ...mapGetters([
     'user',
-    ])
+    'token'
+    ]),
+
+    isLoggedIn() {             
+        if (this.user && this.token) {  
+          return true             
+        }       
+          return false         
+      }
 
   },
 
@@ -351,6 +366,20 @@ export default {
 </script>
 
 <style scoped>
+
+.delivery-button{
+  width: 100%;
+}
+
+.menu-item-price{
+  font-size: 20px;
+  float: right;
+}
+
+.add-to-cart-button{
+  width: 100px;
+  border: solid 1px;
+}
 
 .v-card__title{
   align-items: center;
@@ -403,8 +432,18 @@ i{
 
 #address{
   width: 200px;
-  margin-left: 10px
+  margin-left: 10px;
+  border: solid 1px #bcb8b8; 
 }
 
+#date{
+  color: #ff7503;
+  padding: 4px;
+  width: 58px;
+}
+
+::placeholder{
+  color: gray;
+}
 
 </style>

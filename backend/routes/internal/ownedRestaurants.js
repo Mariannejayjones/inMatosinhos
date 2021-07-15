@@ -48,15 +48,14 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params
 
-  db.query('SELECT r.name, r.address, r.category, r.contact, o.user_id, o.restaurant_id FROM owned_restaurants o join restaurant r on (r.id = o.restaurant_id) where user_id = ?', [id], (error, results) => {
+  db.query('SELECT r.name, r.address, r.contact, o.user_id, o.restaurant_id FROM owned_restaurants o join restaurant r on (r.id = o.restaurant_id) where user_id = ?', [id], (error, results) => {
     if (error) {
       throw error
     }
-
-      res.send({
-        code: 200,
-        data: results
-      })
+    res.send({
+      code: 200,
+      data: results
+    })
   })
 }),
 

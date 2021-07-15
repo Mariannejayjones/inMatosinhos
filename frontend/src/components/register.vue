@@ -1,7 +1,7 @@
 <template>
   <div>
     <main id="mainForm" style="display: flex;">
-      <form id="registerForm" action class="registerForm">
+      <form @submit.prevent id="registerForm" action class="registerForm">
         <div class="formHeader">
           <button @click="closeForm()" class="closeBtn"> x </button>
           <h1 class="formTitle">Registe-se</h1>
@@ -30,7 +30,7 @@
           <label for="contact">Contacto</label>
         </div>
         <div>
-          <input type="number" required="required" v-model="contact" id="contact" name="contact" placeholder="contacto">
+          <input type="text" required="required" v-model="contact" id="contact" name="contact" placeholder="contacto">
         </div> 
         <div>
           <label for="password">Password</label>
@@ -76,7 +76,7 @@ export default {
   
 
     addForm() {
-
+      
       let submitInfo= {
         "name": this.name,
         "address": this.address,
@@ -85,16 +85,16 @@ export default {
         "email": this.email,
         "password": this.password
       }
-       console.log(submitInfo)
-        axios.post(`http://localhost:3000/users`, submitInfo).then((response) => {
-          this.newUser = response.data.data.id
-          alert('verificação enviada para o seu e-mail!')                   
-        })
-        .catch((error) => {
-          console.log(error)
-          alert('ERROR')
-        });
-        this.closeForm()    
+
+      axios.post(`http://localhost:3000/users`, submitInfo).then((response) => {
+        this.newUser = response.data.data.id
+        alert('verificação enviada para o seu e-mail!')                   
+      })
+      .catch((error) => {
+        console.log(error)
+        alert('ERROR')
+      });
+      this.closeForm()    
     }
   }
 }

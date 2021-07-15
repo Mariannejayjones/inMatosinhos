@@ -45,7 +45,7 @@
           <label for="contact">Contactos do establecimento</label>
         </div>
         <div>
-          <input type="number" required="required" v-model="contact" id="contact" placeholder="Contato telefónico">
+          <input type="text" required="required" v-model="contact" id="contact" placeholder="Contato telefónico">
         </div>
         <div>
           <label for="text">Morada completa</label>

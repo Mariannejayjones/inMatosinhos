@@ -3,7 +3,7 @@
 <!--layout for search bar and searchboxes-->
     <div class="search-container">
       <div class="searchBox">
-        <input placeholder="PESQUISAR" v-model="keywords" type="search">
+        <input @keyup.enter="search()" placeholder="PESQUISAR" v-model="keywords" type="search">
         <button @click="search()" id="searchBox" class="btn-search">GO!</button>
       </div>
     </div>
@@ -13,8 +13,9 @@
       <v-row class="mt-12"
       width="800px">
         <v-col cols="12" sm="3" md="3" lg="3" xl="3"
-        v-for="category in categories"
-        :key="category.id">
+          v-for="category in categories"
+          :key="category.id">
+
           <div class="searchCheckboxes">
             <input type="checkbox" name="categories" @change="search()" v-model="selectedCategories" :value=category.id :id=category.id>
             <label for="categories">{{category.name}}</label>
@@ -24,7 +25,7 @@
      
     </div>
     <div>
-      <v-row class="mt-4 restaurants-container"
+      <v-row class="restaurants-container"
       width="1200px">
 
         <v-col cols="12" sm="6" md="4" lg="4" xl="4"
@@ -35,7 +36,7 @@
           class="mx-auto"
           width="400px">
 
-          <div class="5oceanosImg d-flex flex-no-wrap justify-between" style="text-align: center; width:100%; margin-top:80px">
+          <div class="5oceanosImg d-flex flex-no-wrap justify-between" style="text-align: center; width:100%;">
             <v-img
             :src="getRestaurantImage(restaurant.image)"
             max-height="200"
@@ -166,14 +167,18 @@ import axios from 'axios'
   padding-bottom: 15px;
 }
 
+.search-checkbox-Container{
+  padding: 25px;
+}
+
 .searchCheckboxes{
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: right;
-  margin-top: 25px;
+  /* margin-top: 25px; */
   margin-left: 63px;
-  padding: 5px;
+  /* padding: 5px; */
   align-items: center;
   width: 150px;
 }
@@ -207,7 +212,8 @@ span{
   margin-top: -6px;
 }
 
-.restaurants-container {
+.restaurants-container{
+  padding-top: 50px;
   padding-bottom: 50px;
 }
 /* change checkbox colors and alignment with time */
