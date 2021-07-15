@@ -80,7 +80,7 @@
 <script>
 import axios from 'axios'
 export default {
-  data (){
+  data () {
     return {
       name: null,
       dateOfBirth: null,
@@ -93,10 +93,10 @@ export default {
     }
   },
 
-    methods:{
+    methods: {
       closeForm() {
-      document.getElementById('mainForm').style.display = "none";
-    },
+        document.getElementById('mainForm').style.display = "none";
+      },
 
       addForm() {
 
@@ -109,12 +109,10 @@ export default {
           "password": this.password,
           "is_admin": 1 
         }
-
         console.log(submitInfo)
         axios.post(`http://localhost:3000/users`, submitInfo).then((response) => {
           this.newUser = response.data.data.id
-          alert('verificação enviada para o seu e-mail!')
-                    
+          alert('verificação enviada para o seu e-mail!')                    
         })
         .catch((error) => {
           console.log(error)
@@ -131,17 +129,17 @@ export default {
 
 <style scoped>
 
-#mainForm {
+#mainForm{
   display: none;
   justify-content: center;
   z-index: 2;
 }
 
-* {
+*{
   box-sizing: border-box;
 }
  
-.registerForm {
+.registerForm{
   height: 100%;
   max-width: 100%;
   width: 580px;
@@ -156,7 +154,7 @@ export default {
   opacity: 0.9;
 }
 
-.registerForm .closeBtn {
+.registerForm .closeBtn{
     position: absolute;
     top: 5px;
     right: 30px;
@@ -165,7 +163,7 @@ export default {
     cursor: pointer;
 }
 
-h2 {
+h2{
   background-color: darkcyan;
   padding: 12px;
   color: #fff;
@@ -174,17 +172,17 @@ h2 {
   margin-bottom: 10px;
 }
 
-.container {
+.container{
   padding: 0 30px;
   margin-top: 30px;
 }
 
-textarea, input[type=file] {
+textarea, input[type=file]{
   border: 2px solid darkcyan;
   resize: none;
 }
 
-input[type=email], input[type=number], input[type=password], input[type=text], input[type=file], input[type=date], textarea, input[type=submit] {
+input[type=email], input[type=number], input[type=password], input[type=text], input[type=file], input[type=date], textarea, input[type=submit]{
   width: 97%;
   padding: 8px 45px;
   border: none;
@@ -197,7 +195,7 @@ input[type=email], input[type=number], input[type=password], input[type=text], i
   background-color: #fff;
 }
 
-input[type=submit] {
+input[type=submit]{
   background-color: darkcyan;
   width: 35%;
   color: #fff;
@@ -211,7 +209,7 @@ input[type=submit] {
   margin-left: 33%;
 }
 
-label {
+label{
   cursor: default;
   color: darkcyan;
   padding: 8px 45px; 

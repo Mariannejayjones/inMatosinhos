@@ -15,15 +15,16 @@
 import { mapActions} from 'vuex'
 import axios from 'axios'
   export default {
-    data(){ 
-      return{
+    data() { 
+      return {
         email: null,
         password: null
       }
   
     },
+
       // once logged in send to restaurants // 
-    methods:{
+    methods: {
       ...mapActions([
         'setUser',
         'setToken'
@@ -37,25 +38,27 @@ import axios from 'axios'
         }
 
         axios.post('http://localhost:3000/login', logUser).then((response) => {
-            console.log(response);
-            this.setUser(response.data.user)
-            this.setToken(response.data.token)
-            this.$router.push('/landing')       
+          console.log(response);
+          this.setUser(response.data.user)
+          this.setToken(response.data.token)
+          this.$router.push('/landing')       
         }, (error) => {
             console.log(error);
         });
 
       },
 
-      goToLanding(){
+      goToLanding() {
         this.$router.push('/landing')
       },
+
       // on click open register form // 
-      openRegister(){
+      openRegister() {
         this.$router.push('/register')
       },
+
       //on click open register owner form //
-      openRegisterOwner(){
+      openRegisterOwner() {
         this.$router.push('/registerOwner')
       }
 
@@ -67,17 +70,17 @@ import axios from 'axios'
 
 <style> 
 
-* {
+*{
 	box-sizing: border-box;
 }
 
-body {
+body{
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 	font-size: 16px;
 	color: #fff;
 }
 
-.login-box {
+.login-box{
 	background-color: darkcyan;
 	margin: auto auto;
 	padding: 40px;
@@ -94,7 +97,7 @@ body {
 
 }
 
-.login-box:before {
+.login-box:before{
 	background-image:('./assets/backgroundImage.png');
 	width: 100%;
 	height: 100%;
@@ -110,7 +113,7 @@ body {
 	filter: blur(2px);
 }
 
-.login-box input {
+.login-box input{
 	margin: 10px 0px;
 	border: none;
 	padding: 10px;
@@ -121,7 +124,7 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.login-box button {
+.login-box button{
 	background-color: #05c1c1;
 	color: #fff;
 	border: none;
@@ -133,7 +136,7 @@ body {
 	margin: 10px 0px;
 }
 
-button, input, select, textarea {
+button, input, select, textarea{
     background-color: white;
 }
 

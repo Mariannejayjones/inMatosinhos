@@ -13,8 +13,8 @@
       <v-row class="mt-12"
       width="800px">
         <v-col cols="12" sm="3" md="3" lg="3" xl="3"
-         v-for="category in categories"
-          :key="category.id">
+        v-for="category in categories"
+        :key="category.id">
           <div class="searchCheckboxes">
             <input type="checkbox" name="categories" @change="search()" v-model="selectedCategories" :value=category.id :id=category.id>
             <label for="categories">{{category.name}}</label>
@@ -29,20 +29,20 @@
       width="1200px">
 
         <v-col cols="12" sm="6" md="4" lg="4" xl="4"
-          v-for="restaurant in restaurants"
-          :key="restaurant.id">
+        v-for="restaurant in restaurants"
+        :key="restaurant.id">
 
           <v-card
-            class="mx-auto"
-            width="400px">
+          class="mx-auto"
+          width="400px">
 
           <div class="5oceanosImg d-flex flex-no-wrap justify-between" style="text-align: center; width:100%; margin-top:80px">
             <v-img
-              :src="getRestaurantImage(restaurant.image)"
-              max-height="200"
-              min-width="128"
-              min-height="200"
-              style="text-align: center; width:100%;">
+            :src="getRestaurantImage(restaurant.image)"
+            max-height="200"
+            min-width="128"
+            min-height="200"
+            style="text-align: center; width:100%;">
             </v-img>
           </div>
 
@@ -56,10 +56,10 @@
           <!-- goToRestaurant @click with restaurant.id is to bring through each restaurant when selected -->
           <v-card-actions>
             <v-btn
-              color="orange darken-4"
-              text
-              @click="goToRestaurant(restaurant.id)"> 
-              VER
+            color="orange darken-4"
+            text
+            @click="goToRestaurant(restaurant.id)"> 
+            VER
             </v-btn>
           </v-card-actions>
 
@@ -73,7 +73,6 @@
 
 <script>
 import axios from 'axios'
-
  export default {
   data:() => ({
     restaurants: [],
@@ -82,13 +81,14 @@ import axios from 'axios'
     keywords: ''
   }),
 
-  methods:{
+  methods: {
     // retrieves all restaurants //   
     getRestaurants () {
       axios.get('http://localhost:3000/restaurant').then((response) => {
         this.restaurants = response.data.data 
       })
     },
+
     // retrieves all categories 
     getCategories () {
       axios.get('http://localhost:3000/categories').then((response) =>{
@@ -106,8 +106,9 @@ import axios from 'axios'
 
     // in response to the "VER" btn - redirects to each restaurants own path // 
     goToRestaurant(id) {
-        this.$router.push('/restaurant/' + id)
+      this.$router.push('/restaurant/' + id)
     },
+    
     // retrieves all keyword searches alongside the categories selected in checkboxes -  search futher filters the checkbox selection // 
     search() {
       axios.get('http://localhost:3000/restaurant/search?keywords=' + this.keywords + '&categories=' + this.selectedCategories.join(',')).then((response) =>{
