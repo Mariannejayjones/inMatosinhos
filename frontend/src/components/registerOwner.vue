@@ -82,50 +82,50 @@ import axios from 'axios'
 export default {
   data (){
     return {
-       name: null,
-       dateOfBirth: null,
-       email: null,
-       contact: null,
-       password: null,
-       address: null,
-       nameOfBusiness: null,
-       message: null
+      name: null,
+      dateOfBirth: null,
+      email: null,
+      contact: null,
+      password: null,
+      address: null,
+      nameOfBusiness: null,
+      message: null
     }
   },
+
     methods:{
       closeForm() {
       document.getElementById('mainForm').style.display = "none";
     },
 
-addForm() {
+      addForm() {
 
         let submitInfo= {
-        "name": this.name,
-        "address": this.address,
-        "date_of_birth": this.dateOfBirth,
-        "phone": this.contact,
-        "email": this.email,
-        "password": this.password,
-        "is_admin": 1
-        
+          "name": this.name,
+          "address": this.address,
+          "date_of_birth": this.dateOfBirth,
+          "phone": this.contact,
+          "email": this.email,
+          "password": this.password,
+          "is_admin": 1 
         }
+
         console.log(submitInfo)
         axios.post(`http://localhost:3000/users`, submitInfo).then((response) => {
           this.newUser = response.data.data.id
           alert('verificação enviada para o seu e-mail!')
                     
-      })
+        })
         .catch((error) => {
-        console.log(error)
-        alert('ERROR')
+          console.log(error)
+          alert('ERROR')
         });
         this.closeForm()
       }
     }
 
-  }
-
-    
+}
+   
 </script>
 
 

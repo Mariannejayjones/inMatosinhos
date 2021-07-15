@@ -20,7 +20,7 @@
       </div>
    </div>
 
-    <div style="display: flex; justify-content: space-around; padding-left: 7%; padding-bottom: 38px;">
+    <div style="display: flex; justify-content: space-around; padding-left: 7%; padding-bottom: 38px; margin-left: -45px;">
       <div style="width: 25%; max-height: 250px;">
         <img :src="require('@/assets/restaurant.png')"/>
         <button id="goToRestaurant" @click="goToRestaurant()" class="btnRestaurant">

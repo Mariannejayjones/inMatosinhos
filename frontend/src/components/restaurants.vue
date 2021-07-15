@@ -25,7 +25,7 @@
     </div>
  <!-- // why click or check was freaking out ?!!!!!!! -->
     <div>
-      <v-row class="mt-12"
+      <v-row class="mt-12 restaurants-container"
       width="1200px">
 
         <v-col cols="12" sm="6" md="4" lg="4" xl="4"
@@ -117,18 +117,9 @@ import axios from 'axios'
   },
 
   async created() {
-        await this.getRestaurants()
-        await this.getCategories()
-        
-
-    },
-
-    
-
-
-
-  
-
+    await this.getRestaurants()
+    await this.getCategories()
+  }
 }
 
 </script>
@@ -139,7 +130,7 @@ import axios from 'axios'
   background-color: #05c1c1;
   height: 45px;
   width: 600px;
-  margin-left: 33%;
+  margin-left: 25%;
   margin-top: -270px;
   padding:10px 10px;
   border-radius: 5px;
@@ -214,6 +205,10 @@ span{
 
 .searchBox{
   margin-top: -6px;
+}
+
+.restaurants-container {
+  padding-bottom: 50px;
 }
 /* change checkbox colors and alignment with time */
 </style>

@@ -47,7 +47,7 @@ router.get('/', (req, res) => {
 router.get('/search', (req, res) => {
   const { keywords,categories } = req.query
 
-  let query_string = 'SELECT restaurant.* FROM restaurant,restaurants_categories WHERE (' // initialise query string
+  let query_string = 'SELECT DISTINCT restaurant.* FROM restaurant,restaurants_categories WHERE (' // initialise query string
   const search_words = keywords.split(' ') // splits search terms into seperate words by removing and spliting white spaces between words // 
 
   for(let i=0; i<search_words.length; i++) { // increment search through each word and for each word to add condition "name like"
@@ -61,8 +61,7 @@ router.get('/search', (req, res) => {
     query_string += ') AND (restaurants_categories.restaurant_id = restaurant.id AND restaurants_categories.category_id IN (' + check_categories.join(',') + ')'
   }
   query_string += ')'
-
-//NELSON!!!!!!!!!!!!!!!!!!!!!!!! 
+  query_string += 'ORDER BY restaurant.id'
 
   db.query(query_string, (error, results) => {
     if (error) {

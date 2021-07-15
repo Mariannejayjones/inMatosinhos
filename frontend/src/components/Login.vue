@@ -38,9 +38,9 @@ import axios from 'axios'
 
         axios.post('http://localhost:3000/login', logUser).then((response) => {
             console.log(response);
-            this.$router.push('/restaurants')
             this.setUser(response.data.user)
             this.setToken(response.data.token)
+            this.$router.push('/landing')       
         }, (error) => {
             console.log(error);
         });
@@ -58,8 +58,6 @@ import axios from 'axios'
       openRegisterOwner(){
         this.$router.push('/registerOwner')
       }
-
-
 
     }
 }

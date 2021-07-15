@@ -16,12 +16,12 @@ module.exports = {
   register(app) {
     app.use("/restaurant", restaurantsRouter);
     app.use("/menuitems", restaurantMenuItemsRouter);
-    app.use("/ownedRestaurants", ownedRestaurantsRouter);
+    app.use("/ownedRestaurants", auth,ownedRestaurantsRouter);
     app.use("/timeslots", timeSlotsRouter);
     app.use("/reservations", auth, reservationRouter);
-    app.use("/delivery", auth, deliveryRouter);
-    app.use("/deliveryItems", auth, deliveryItemsRouter);
-    app.use("/users", auth,usersRouter);
+    app.use("/delivery", auth,deliveryRouter);
+    app.use("/deliveryItems", deliveryItemsRouter);
+    app.use("/users",usersRouter);
     app.use("/categories", categoriesRouter)
     app.post("/login", login);
 

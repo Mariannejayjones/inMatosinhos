@@ -80,7 +80,7 @@ router.post('/', (req, res) => {
     restaurant_id: "required",  
     user_id: "required",
     price: "required"
-  
+
   }).then((value) => {
     db.query('INSERT INTO deliveries SET ?', [value], (error, results, _) => {
       if (error) {
@@ -103,79 +103,6 @@ router.post('/', (req, res) => {
     })
   }).catch((error) => {
     res.status(400).send(error)
-  })
-})
-
-// router.put('/:id', (req, res) => {
-//   const { id } = req.params
-//   const status = req.body
-
-//   validate(status, {
-//     status: 'required',
-//   }).then((value) => {
-//     db.query('UPDATE deliveries SET ? WHERE id = ?', [value, id], (error, results, _) => {
-//       if (error) {
-//         throw error
-//       }
-
-//       db.query('SELECT * FROM deliveries WHERE id = ? LIMIT 1', [id], (error, results, _) => {
-//         if (error) {
-//           throw error
-//         }
-
-//         res.send({
-//           code: 200,
-//           meta: null,
-//           data: results[0]
-//         })
-//       })
-//     })
-//   }).catch((error) => {
-//     res.status(400).send(error)
-//   })
-// })
-
-// router.patch('/:id/completed', (req, res) => {
-//   const { id } = req.params
-
-//   const data = req.body
-
-//   validate(data, {
-//     completed: 'boolean',
-//   }).then((value) => {
-//     db.query(`UPDATE todos SET completed = ${value.completed} WHERE id = ${id}`, (error, results, _) => {
-//       if (error) {
-//         throw error
-//       }
-
-//       res.send(value.completed)
-//     })
-//   }).catch((error) => {
-//     res.status(400).send(error)
-//   })
-// })
-
-router.delete('/:id', (req, res) => {
-  const { id } = req.params
-
-  db.query('SELECT * FROM deliveries WHERE id = ?', [id], (error, results, _) => {
-    if (error) {
-      throw error
-    }
-    console.log(results)
-    const [deliveries] = results
-
-    db.query('DELETE FROM deliveries WHERE id = ?', [id], (error,_, __) => {
-      if (error) {
-        throw error
-      }
-
-      res.send({
-        code: 200,
-        meta: null,
-        data: deliveries
-      })
-    })
   })
 })
 

@@ -326,9 +326,9 @@ import { mapGetters } from 'vuex'
     computed:{
       // create average between the max price and min price range -  max + min divided by 2 // 
       avgPrice() {
-        if(!this.restaurant.pricerangemin||!this.restaurant.pricerangemax){return}
-        let min = this.restaurant.pricerangemin
-        let max = this.restaurant.pricerangemax
+        if(!this.restaurant.pricerange_min||!this.restaurant.pricerange_max){return}
+        let min = parseFloat(this.restaurant.pricerange_min)
+        let max = parseFloat(this.restaurant.pricerange_max)
           return (max + min) /2
       }, 
 
