@@ -144,7 +144,7 @@
         <div class="address-input" >
           <i>* Morada alternativa: *</i><input type="text" id="address" name="address" placeholder="* Morada alternativa *">
         </div>  
-        {{this.currentAddress}}
+        <!-- {{this.currentAddress}} -->
         <div class="text-center">
           <v-btn
             class="delivery-button"
